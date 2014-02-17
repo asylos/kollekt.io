@@ -1,0 +1,38 @@
+{
+  "name": "kollektio",
+  "version": "1.6.0",
+  "authors": "Sven Lito <me@svenlito.com>",
+  "type": "app",
+  "engines": {
+    "node": ">= 0.10.x"
+  },
+  "dependencies": {
+    "hoodie-server": "0.9.2",
+    "hoodie-plugin-appconfig": "~0.1.0",
+    "hoodie-plugin-email": "~0.1.1",
+    "hoodie-plugin-users": "0.0.9"
+  },
+  "devDependencies": {
+    "grunt-contrib-copy": "~0.2.0",
+    "grunt-requirejs": "0.4.0",
+    "karma": "~0.8.6",
+    "grunt": "~0.4.1",
+    "grunt-contrib-jshint": "~0.6.0",
+    "grunt-contrib-watch": "~0.4.4",
+    "grunt-shell": "~0.3.1"
+  },
+  "subdomain": "hoodie-kollektio",
+  "domains": [
+    "admin.hoodie-kollektio.jit.su",
+    "couch.hoodie-kollektio.jit.su"
+  ],
+  "scripts": {
+    "start": "node node_modules/hoodie-app/bin/start",
+    "test": "grunt test --verbose"
+  },
+  "hoodie": {
+    "plugins": [
+      "hoodie-plugin-users"
+    ]
+  }
+}

@@ -1,0 +1,4 @@
+data/couch.log
+data/couch.stdout
+www/lib/*
+node_modules/*
