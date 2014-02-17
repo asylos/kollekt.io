@@ -1,4 +1,4 @@
-module.exports = function(grunt) {
+module.exports = function (grunt) {
 
   'use strict';
 
@@ -9,16 +9,45 @@ module.exports = function(grunt) {
       files: [
         'Gruntfile.js',
         'www/tests/app/**/*.js',
-        'www/app/**/*.js'
+        'www/app/collections/**/*.js',
+        'www/app/controllers/**/*.js',
+        'www/app/helpers/**/*.js',
+        'www/app/models/**/*.js',
+        'www/app/views/**/*.js',
+        'www/app/*.js'
       ],
       options: {
-        jshintrc: '.jshintrc'
+        jshintrc: 'www/.jshintrc'
       }
     },
 
     watch: {
-      files: ['<%= jshint.files %>'],
-      tasks: ['jshint', 'shell:test']
+      files: ['<%= jshint.files %>', 'www/assets/css/app/*.scss', 'www/app/templates/*.html'],
+      tasks: ['jshint', 'compass']
+    },
+
+    hoodie: {
+      start: {
+        options: {
+        }
+      }
+    },
+
+    compass: {
+      dist: {
+        options: {
+          sassDir: 'www/assets/css/app',
+          cssDir: 'www/assets/css/app',
+          environment: 'production'
+        }
+      },
+      dev: {
+        options: {
+          sassDir: 'www/assets/css/app',
+          cssDir: 'www/assets/css/app'
+        }
+      }
+
     },
 
     copy: {
@@ -98,12 +127,15 @@ module.exports = function(grunt) {
 
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-contrib-compass');
   grunt.loadNpmTasks('grunt-requirejs');
   grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-hoodie');
   grunt.loadNpmTasks('grunt-shell');
 
-  grunt.registerTask('default', ['jshint']);
+  grunt.registerTask('default', ['jshint', 'watch']);
   grunt.registerTask('test', ['shell:test']);
-  grunt.registerTask('build', ['jshint', 'copy', 'requirejs']);
+  grunt.registerTask('build', ['jshint', 'compass', 'copy', 'requirejs']);
+  grunt.registerTask('server', ['hoodie', 'watch']);
 
 };
