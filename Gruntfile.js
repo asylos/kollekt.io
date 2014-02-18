@@ -9,12 +9,7 @@ module.exports = function (grunt) {
       files: [
         'Gruntfile.js',
         'www/tests/app/**/*.js',
-        'www/app/collections/**/*.js',
-        'www/app/controllers/**/*.js',
-        'www/app/helpers/**/*.js',
-        'www/app/models/**/*.js',
-        'www/app/views/**/*.js',
-        'www/app/*.js'
+        'www/app/**/*.js'
       ],
       options: {
         jshintrc: 'www/.jshintrc'

@@ -17,7 +17,7 @@ require.config({
     validation:    '/lib/backbone-validation/dist/backbone-validation',
     hoodie:        '/lib/hoodie/dist/hoodie',
     backboneHoodie:'/lib/backbone-hoodie/src/backbone-hoodie',
-    urlify:        '/app/lib/urlify/urlify'
+    urlify:        '/lib/urlify.js/index'
   },
 
   shim: {
