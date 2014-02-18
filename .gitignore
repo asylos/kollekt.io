@@ -1,5 +1,5 @@
-data/couch.log
-data/couch.stdout
-www/lib/*
-node_modules/*
+data
+data
+www/lib
+node_modules
 .sass-cache/
