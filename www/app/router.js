@@ -3,18 +3,18 @@
 //
 
 define([
-  'backbone',
   'helpers/namespace',
-  'marionette'
+  'marionette',
+  'helpers/mvc/router'
 ],
 
-function (Backbone, app) {
+function (app, Marionette, BaseRouter) {
 
   'use strict';
 
   app.on('initialize:before', function () {
 
-    var Router = Backbone.Router.extend({
+    var Router = BaseRouter.extend({
 
       routes: {
         ''                      : 'index',

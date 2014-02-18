@@ -17,7 +17,8 @@ require.config({
     validation:    '/lib/backbone-validation/dist/backbone-validation',
     hoodie:        '/lib/hoodie/dist/hoodie',
     backboneHoodie:'/lib/backbone-hoodie/src/backbone-hoodie',
-    urlify:        '/lib/urlify/index'
+    urlify:        '/lib/urlify/index',
+    routeFilter:   '/lib/backbone.routeFilter/index'
   },
 
   shim: {
@@ -38,6 +39,10 @@ require.config({
     },
     'urlify':{
       exports: 'Urlify'
+    },
+    'routeFilter': {
+      deps: ['backbone'],
+      exports: 'Backbone.Router'
     }
   }
 });
