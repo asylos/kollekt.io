@@ -15,6 +15,7 @@
     "hoodie": "~0.6.4",
     "sinonjs": "~1.7.1",
     "backbone-hoodie": "~1.0.2",
-    "backbone-validation": "~0.9.1"
+    "backbone-validation": "~0.9.1",
+    "urlify": "https://raw.github.com/Gottox/node-urlify/master/dist/urlify.js"
   }
 }
