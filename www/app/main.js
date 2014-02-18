@@ -16,8 +16,14 @@ function (app, router, Config, Urlify) {
 
   require([
     'helpers/handlebars',
-    'controllers/layout'
+    'controllers/layout',
+    'backboneHoodie'  //is going to be globally available on the backbone object
   ]);
+
+  app.on('initialize:before', function() {
+    Backbone.connect(); // gives you Backbone.hoodie
+  });
+
 
   var config = new Config(),
       options = config.toJSON();
@@ -36,11 +42,3 @@ function (app, router, Config, Urlify) {
 
 });
 
-define([
-  'backboneHoodie'  //is going to be globally available on the backbone object
-],
-
-function () {
-  'use strict';
-  Backbone.connect(); // gives you Backbone.hoodie
-});
