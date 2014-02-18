@@ -14,7 +14,7 @@ require.config({
     lodash:        '/lib/lodash/lodash',
     backbone:      '/lib/backbone/backbone',
     marionette:    '/lib/backbone.marionette/lib/backbone.marionette',
-    validation:    '/lib/backbone.validation/dist/backbone-validation',
+    validation:    '/lib/backbone-validation/dist/backbone-validation',
     hoodie:        '/lib/hoodie/dist/hoodie',
     backboneHoodie:'/lib/backbone-hoodie/src/backbone-hoodie',
     urlify:        '/app/lib/urlify/urlify'
