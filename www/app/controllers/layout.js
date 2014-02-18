@@ -35,7 +35,7 @@ function (app, Marionette, appLayoutTmpl) {
         container.show(layout);
 
         app.addRegions({
-          header: "#header",
+          header: "header",
           content: '#content'
         });
 

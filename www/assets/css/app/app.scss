@@ -1,3 +1,186 @@
-body{
-  background-color: #E5E5E5;
+/*
+
+  kollekt.io styles
+
+  Alex Feyerke / Neighbourhoodies 2014
+
+ */
+
+
+@import "../../../lib/normalize-scss/_normalize.scss";
+
+@import "compass/css3/transform";
+@import "compass/css3/border-radius";
+
+// Basics
+
+*, *:before, *:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
+
+html {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 62.5%;
+  line-height: 1.5;
+}
+
+// Mixins and Placeholders
+
+@mixin font-size($pxValue){
+  $remValue: ($pxValue / 10);
+  font-size: #{$pxValue}px;
+  font-size: #{$remValue}rem;
+}
+
+// Variables
+
+$darkBackground       : #444444;
+$mediumBackground     : #C0C0C0;
+$background           : #E5E5E5;
+$brightestBackground  : #FFFFFF;
+
+
+$darkText             : #444444;
+$mediumText           : #979696;
+$lightText            : #F7F6F0;
+$brightText           : #FFFFFF;
+
+$padding              : 1.5rem;
+
+body{
+  background-color: $background;
+  @include font-size(16);
+}
+
+// Typography
+
+h1{
+  @include font-size(32);
+  font-weight: normal;
+}
+
+h2{
+  @include font-size(24);
+  font-weight: normal;
+}
+
+h3{
+  @include font-size(16);
+  font-weight: normal;
+}
+
+
+a {
+  text-decoration: none;
+  color: #08C;
+  transition: all 0.3s ease-out;
+  position: relative;
+  padding: .5em;
+  margin: -.5em;
+  &:hover{
+    color: #0AF;
+  }
+}
+
+// Inputs and labels
+
+input[type="text"]{
+  @include border-radius(5px);
+  outline: none;
+  width: 100%;
+  padding: 1rem;
+  margin-top: $padding;
+  background-color: $brightestBackground;
+  border: 5px solid $brightestBackground;
+  transition: all 0.3s ease-out;
+  &:hover, &:focus{
+    border: 5px solid $darkBackground;
+  }
+}
+
+input[type="submit"]{
+  @include border-radius(5px);
+  border: none;
+  outline: none;
+  width: 100%;
+  padding: 1rem;
+  margin-top: $padding;
+  transition: all 0.3s ease-out;
+  &:hover, &:focus{
+    background-color: $darkBackground;
+    color: $lightText;
+  }
+}
+
+label{
+  @include font-size(20);
+  margin-bottom: $padding;
+}
+
+// Structure
+
+.dark{
+  background-color: $darkBackground;
+  color: $lightText;
+  a{
+    color: $lightText;
+    &:hover{
+      color: $mediumText;
+    }
+  }
+}
+
+.light{
+  background-color: $background;
+  color: $darkText;
+  a{
+    color: $darkText;
+    &:hover{
+      color: $mediumText;
+    }
+  }
+  .note{
+    color: $mediumText;
+  }
+}
+
+header{
+  padding: $padding;
+  h1{
+    margin: 0;
+  }
+}
+
+// Index view
+
+.questionContainer {
+  margin: $padding;
+  input[type="text"]{
+    margin-top: $padding;
+  }
+}
+
+// Question view
+
+header .questionView{
+  h2, h3{
+    margin: 0;
+  }
+  .meta{
+    @include font-size(12);
+  }
+}
+
+#content .questionView{
+  margin: $padding;
+}
+
+
+
+/*
+@media only screen and (min-width: 481px) {
+  @import "481up";
+}
+*/

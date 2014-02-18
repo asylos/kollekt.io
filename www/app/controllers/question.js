@@ -6,10 +6,11 @@ define([
   'helpers/namespace',
   'marionette',
   'models/question',
-  'views/question'
+  'views/question',
+  'views/questionHeader'
 ],
 
-function (app, Marionette, Model, View) {
+function (app, Marionette, Model, View, QuestionHeaderView) {
 
   "use strict";
 
@@ -31,8 +32,13 @@ function (app, Marionette, Model, View) {
         model: model
       });
 
+      var questionHeaderView = new QuestionHeaderView({
+        model: model
+      });
+
       // show loading screen
       app.content.show(view);
+      app.header.show(questionHeaderView);
     }
 
   });

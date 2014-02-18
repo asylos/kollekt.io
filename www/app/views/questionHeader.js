@@ -1,11 +1,11 @@
 //
-// # views.question
+// # views.questionHeader
 //
 
 define([
   'helpers/namespace',
   'marionette',
-  'hbs!templates/question'
+  'hbs!templates/questionHeader'
 ],
 
 function (app, Marionette, template) {

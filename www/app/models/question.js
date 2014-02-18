@@ -23,11 +23,13 @@ function (BaseModel) {
 
     defaults: {
       question: '',
-      id: ''
+      id: '',
+      createdAt: ''
     },
 
     onQuestion: function (question){
       this.attributes.question = question.question;
+      this.attributes.createdAt = question.createdAt;
     },
 
     onNoQuestion: function (data){
