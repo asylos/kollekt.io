@@ -4,15 +4,18 @@
 
 define([
   'marionette',
-  'models/config'
+  'models/config',
+  'models/user'
 ],
 
-function (Marionette, ConfigModel) {
+function (Marionette, ConfigModel, UserModel) {
 
   'use strict';
 
   var config = new ConfigModel(),
-      app = new Marionette.Application();
+  app = new Marionette.Application();
+
+  app.user = new UserModel();
 
   if (config.get('debug')) {
     window.app = app;
