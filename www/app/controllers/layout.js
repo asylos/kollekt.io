@@ -39,8 +39,6 @@ function (app, Marionette, appLayoutTmpl) {
           content: '#content'
         });
 
-        console.log("regions defined");
-
       }
     });
 
@@ -49,3 +47,4 @@ function (app, Marionette, appLayoutTmpl) {
   });
 
 });
+

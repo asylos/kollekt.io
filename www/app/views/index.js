@@ -47,7 +47,7 @@ function (app, Marionette) {
         // Update model
         // SVEN: this isn't really an actual model for a question, I just needed something to
         // save the thing with. We never use it again afterwards.
-        this.model.set({
+        this.model.save({
           question: question
         });
         // Immediately open the question's page

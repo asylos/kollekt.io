@@ -35,3 +35,4 @@ function (app, Marionette, Model, IndexView, indexTemplate) {
   return controller;
 
 });
+
