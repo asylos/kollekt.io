@@ -7,17 +7,18 @@ require([
   'helpers/namespace',
   'router',
   'models/config',
-  'urlify'
+  'urlify',
+  'backbone',
+  'backboneHoodie'  //is going to be globally available on the backbone object
 ],
 
-function (app, router, Config, Urlify) {
+function (app, router, Config, Urlify, Backbone) {
 
   'use strict';
 
   require([
     'helpers/handlebars',
     'controllers/layout',
-    'backboneHoodie'  //is going to be globally available on the backbone object
   ]);
 
   app.on('initialize:before', function() {
