@@ -34,6 +34,7 @@ function (app, router, Config, Urlify, Backbone) {
 
   app.urlify = Urlify.create({
     spaces: '-',
+    nonPrintable: '',
     toLower: true,
     trim: true
   });
