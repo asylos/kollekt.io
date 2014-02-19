@@ -22,11 +22,7 @@ function (app, Marionette, Model, View, HeaderView, headerTemplate) {
       this.model = new Model({
         continueAfterSignIn: app.router.routeAfterSignIn
       });
-      /*
-      if(app.router.routeAfterSignIn){
-        this.model.attributes.continueAfterSignIn = true;
-      }
-      */
+
       console.log("model: ",self.model);
 
       this.view = new View({

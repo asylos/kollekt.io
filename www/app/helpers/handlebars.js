@@ -25,4 +25,17 @@ function (Handlebars) {
     }
   });
 
+  // Helper for SVG icons, turns {{#icon "user-1"}}{{/icon}}, for example, into this:
+  Handlebars.registerHelper('icon', function(iconName, wtf) {
+    console.log("wtf: ",wtf);
+    console.log("iconName: ",iconName);
+    var out = '';
+    out += '<div class="icon">';
+    out += '  <svg viewBox="0 0 32 32">';
+    out += '    <use xlink:href="#'+iconName+'"></use>';
+    out += '  </svg>';
+    out += '</div>';
+    return out;
+  });
+
 });
