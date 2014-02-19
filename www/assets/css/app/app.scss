@@ -89,6 +89,16 @@ html {
     width: 24px;
     height: 24px;
   }
+  &.inline{
+    display: inline-block;
+    vertical-align: text-bottom;
+    &.padRight{
+      margin-right: 3px;
+    }
+    &.padLeft{
+      margin-left: 3px;
+    }
+  }
 }
 
 // Mixins and Placeholders
@@ -196,14 +206,20 @@ label{
 .light{
   background-color: $background;
   color: $darkText;
-  a, .icon, .im{
+  a{
     color: $darkText;
     &:hover{
       color: $mediumText;
+      .icon, .im{
+        fill: $mediumText;
+      }
     }
   }
   .note{
     color: $mediumText;
+  }
+  .icon, .im{
+    fill: $darkText;
   }
 }
 
