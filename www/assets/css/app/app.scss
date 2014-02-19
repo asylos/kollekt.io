@@ -26,6 +26,34 @@ html {
   line-height: 1.5;
 }
 
+.disabled{
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.clearfix:before,
+.clearfix:after {
+  content: " ";
+  display: table;
+}
+
+.clearfix:after {
+  clear: both;
+}
+
+/* IE6/7 support */
+.clearfix {
+  *zoom: 1;
+}
+
+.left{
+  float: left;
+}
+
+.right{
+  float: right;
+}
+
 // Mixins and Placeholders
 
 @mixin font-size($pxValue){
@@ -41,11 +69,12 @@ $mediumBackground     : #C0C0C0;
 $background           : #E5E5E5;
 $brightestBackground  : #FFFFFF;
 
-
 $darkText             : #444444;
 $mediumText           : #979696;
 $lightText            : #F7F6F0;
 $brightText           : #FFFFFF;
+
+$warning              : #FFA500;
 
 $padding              : 1.5rem;
 
@@ -71,7 +100,6 @@ h3{
   font-weight: normal;
 }
 
-
 a {
   text-decoration: none;
   color: #08C;
@@ -84,9 +112,14 @@ a {
   }
 }
 
+.small{
+  @include font-size(12);
+}
+
 // Inputs and labels
 
-input[type="text"]{
+input[type="text"],
+input[type="password"]{
   @include border-radius(5px);
   outline: none;
   width: 100%;
@@ -146,32 +179,33 @@ label{
   }
 }
 
+.warning{
+  color: $warning;
+}
+
 header{
   padding: $padding;
-  h1{
-    margin: 0;
-  }
-}
-
-// Index view
-
-.questionContainer {
-  margin: $padding;
-  input[type="text"]{
-    margin-top: $padding;
-  }
-}
-
-// Question view
-
-header .questionView{
-  h2, h3{
+  h1, h2, h3{
     margin: 0;
   }
   .meta{
     @include font-size(12);
   }
+  .signOut{
+    position: fixed;
+    top: $padding;
+    right: $padding;
+  }
 }
+
+.paddedContainer {
+  margin: $padding;
+  input{
+    margin-top: $padding;
+  }
+}
+
+// Question view
 
 #content .questionView{
   margin: $padding;

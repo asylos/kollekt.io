@@ -62,6 +62,17 @@ function (Backbone) {
       if (window.confirm('you sure mate?')) {
         Backbone.hoodie.account.destroy();
       }
+    },
+
+    validation: {
+      username: {
+        required: true,
+        msg: 'Username can\'t be empty'
+      },
+      password: {
+        required: true,
+        msg: 'Password can\'t be empty'
+      }
     }
 
   });

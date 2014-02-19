@@ -1,0 +1,10 @@
+<label for="question">Sign up to kollekt.io</label>
+<input type="text" placeholder="Your username" id="username" name="username" >
+<input type="password" placeholder="Your password" id="password" name="password" >
+<input type="password" placeholder="Confirm your password" id="passwordConfirm" name="passwordConfirm" >
+{{#if continueAfterSignIn}}
+<input type="submit" value="Sign up and continue" class="submit">
+{{else}}
+<input type="submit" value="Sign up" class="submit">
+{{/if}}
+<p class="warning"></p>

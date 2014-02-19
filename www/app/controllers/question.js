@@ -8,10 +8,11 @@ define([
   'models/question',
   'collections/questions',
   'views/question',
-  'views/questionHeader'
+  'views/header',
+  'hbs!templates/questionHeader'
 ],
 
-function (app, Marionette, Model, Collection, View, QuestionHeaderView) {
+function (app, Marionette, Model, Collection, View, QuestionHeaderView, questionHeaderTemplate) {
 
   "use strict";
 
@@ -31,7 +32,8 @@ function (app, Marionette, Model, Collection, View, QuestionHeaderView) {
       });
 
       var model = new Model({
-        id: this.options.id
+        id: this.options.id,
+        currentUser: Backbone.hoodie.account.username
       });
 
       this.listenTo(model, 'reset', function (m) {
@@ -43,7 +45,9 @@ function (app, Marionette, Model, Collection, View, QuestionHeaderView) {
       });
 
       var questionHeaderView = new QuestionHeaderView({
-        model: model
+        model: model,
+        className: 'questionView',
+        template : questionHeaderTemplate
       });
 
       // show loading screen

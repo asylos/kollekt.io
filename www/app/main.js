@@ -25,7 +25,6 @@ function (app, router, Config, Urlify, Backbone) {
     Backbone.connect(); // gives you Backbone.hoodie
   });
 
-
   var config = new Config(),
       options = config.toJSON();
 

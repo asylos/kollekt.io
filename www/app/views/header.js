@@ -4,17 +4,14 @@
 
 define([
   'helpers/namespace',
-  'marionette',
-  'hbs!templates/questionHeader'
+  'marionette'
 ],
 
-function (app, Marionette, template) {
+function (app, Marionette) {
 
   'use strict';
 
   var view = Marionette.ItemView.extend({
-    className: 'questionView',
-    template : template
   });
 
   return view;

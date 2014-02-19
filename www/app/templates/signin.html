@@ -1,0 +1,18 @@
+{{#if continueAfterSignIn}}
+<label for="question">Please sign in to view <span class="small">{{continueAfterSignIn}}</span></label>
+{{else}}
+<label for="question">Please sign in</label>
+{{/if}}
+
+<input type="text" placeholder="Your username" id="username" name="username" >
+<input type="password" placeholder="Your password" id="password" name="password" >
+{{#if continueAfterSignIn}}
+<input type="submit" value="Sign in and continue" class="submit">
+{{else}}
+<input type="submit" value="Sign in" class="submit">
+{{/if}}
+<p class="warning"></p>
+<div class="clearfix">
+  <a href="/#signup" class="signUp small left">Sign up for kollekt.io</a>
+  <a href="/#forgotPassword" class="forgotPassword small right">I forgot my password</a>
+</div>

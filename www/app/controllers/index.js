@@ -7,10 +7,12 @@ define([
   'marionette',
   'models/index',
   'views/index',
-  'hbs!templates/index'
+  'views/header',
+  'hbs!templates/index',
+  'hbs!templates/defaultHeader'
 ],
 
-function (app, Marionette, Model, IndexView, indexTemplate) {
+function (app, Marionette, Model, IndexView, HeaderView, indexTemplate, headerTemplate) {
 
   "use strict";
 
@@ -20,12 +22,21 @@ function (app, Marionette, Model, IndexView, indexTemplate) {
       this.options = options || {};
       this.model = new Model();
 
+      this.model.attributes.currentUser = Backbone.hoodie.account.username;
+
       this.indexView = new IndexView({
         model: self.model,
         template: indexTemplate,
+        className: 'paddedContainer'
+      });
+
+      this.headerView = new HeaderView({
+        model: self.model,
+        template: headerTemplate
       });
 
       app.content.show(self.indexView);
+      app.header.show(self.headerView);
     }
 
   });

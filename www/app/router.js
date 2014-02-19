@@ -18,6 +18,9 @@ function (app, Marionette, BaseRouter) {
 
       routes: {
         ''                      : 'index',
+        'signup'                : 'signup',
+        'signin'                : 'signin',
+        'signout'               : 'signout',
         'question/:id'          : 'question',
         // The slug is never used, it's just for read- and bookmarkability
         'question/:id/:slug'    : 'question'
@@ -25,6 +28,24 @@ function (app, Marionette, BaseRouter) {
 
       index: function () {
         require(['controllers/index'], function (Controller) {
+          new Controller();
+        });
+      },
+
+      signup: function () {
+        require(['controllers/signup'], function (Controller) {
+          new Controller();
+        });
+      },
+
+      signin: function () {
+        require(['controllers/signin'], function (Controller) {
+          new Controller();
+        });
+      },
+
+      signout: function () {
+        require(['controllers/signout'], function (Controller) {
           new Controller();
         });
       },

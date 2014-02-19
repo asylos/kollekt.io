@@ -1,8 +1,12 @@
 <div class="questionContainer light">
+  {{#if currentUser}}
+  <label for="question">Please ask your question, {{currentUser}}</label>
+  {{else}}
   <label for="question">Please ask your question</label>
+  {{/if}}
   <input type="text" placeholder="Your question" id="question" name="question" tabindex="1">
   <input type="submit" value="Ask!" class="submit" tabindex="2">
   <p class="note">
-    Asking <a href="#">a question</a> will create a page which you can share to the people you'd like to answer it.
+    Asking <a href="/#question/5alo9vt/first-espy-question">a question</a> will create a page which you can share to the people you'd like to answer it.
   </p>
 </div>

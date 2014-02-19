@@ -13,7 +13,7 @@ function (app, Marionette, template) {
   'use strict';
 
   var view = Marionette.ItemView.extend({
-    className: 'questionView',
+    className: 'questionView paddedContainer',
     template : template
   });
 
