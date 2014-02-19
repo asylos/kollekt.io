@@ -43,7 +43,7 @@ function (Backbone) {
     },
 
     signUp: function(username, password) {
-      return Backbone.hoodie.account.signUn(username, password);
+      return Backbone.hoodie.account.signUp(username, password);
     },
 
     changePassword: function(currentPwd, newPwd) {
