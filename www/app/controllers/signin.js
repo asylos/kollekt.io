@@ -6,10 +6,12 @@ define([
   'helpers/namespace',
   'marionette',
   'models/user',
-  'views/signin'
+  'views/signin',
+  'views/header',
+  'hbs!templates/defaultHeader'
 ],
 
-function (app, Marionette, Model, View) {
+function (app, Marionette, Model, View, HeaderView, headerTemplate) {
 
   "use strict";
 
@@ -31,7 +33,14 @@ function (app, Marionette, Model, View) {
         model: self.model
       });
 
+      this.headerView = new HeaderView({
+        model: self.model,
+        template : headerTemplate
+      });
+
       app.content.show(self.view);
+      app.header.show(self.headerView);
+
     }
 
   });
