@@ -35,6 +35,7 @@ function (app, Marionette, Model, IndexView, HeaderView, indexTemplate, headerTe
         template: headerTemplate
       });
 
+      // FIX: This sometimes errors because the regions aren't ready yet
       app.content.show(self.indexView);
       app.header.show(self.headerView);
     }

@@ -23,9 +23,11 @@ function (app, Marionette, Model, Collection, View, QuestionHeaderView, question
       var self = this;
 
       this.collection = new Collection();
+      /*
       this.collection.fetch({
         reset: true
       });
+      */
 
       this.listenTo(this.collection, 'all', function (m) {
         console.log('collection evt: ', m);
@@ -43,12 +45,14 @@ function (app, Marionette, Model, Collection, View, QuestionHeaderView, question
       var view = new View({
         model: model
       });
+      console.log("model: ",model);
 
       var questionHeaderView = new QuestionHeaderView({
         model: model,
         className: 'questionView',
         template : questionHeaderTemplate
       });
+      console.log("questionHeaderView: ",questionHeaderView);
 
       // show loading screen
       app.content.show(view);
