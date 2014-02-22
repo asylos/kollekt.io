@@ -14,6 +14,9 @@ function (app, Marionette) {
   'use strict';
 
   return Marionette.ItemView.extend({
+
+    submitClicked: false,
+
     initialize: function() {
       Backbone.Validation.bind(this);
     },
@@ -33,6 +36,11 @@ function (app, Marionette) {
     },
 
     submit: function (event){
+      if(!this.submitClicked){
+        $('.submit').val('Are you sure? No typos?');
+        this.submitClicked = true;
+        return;
+      }
       if(event){
         event.preventDefault();
       }
