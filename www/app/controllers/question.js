@@ -38,14 +38,19 @@ function (app, Marionette, Model, Collection, View, QuestionHeaderView, question
         currentUser: Backbone.hoodie.account.username
       });
 
-      this.listenTo(model, 'reset', function (m) {
-        console.log("change: ", self.model);
-      });
-
-      var view = new View({
+      self.view = new View({
         model: model
       });
-      console.log("model: ",model);
+
+      // FIX: find out why listenTo doesn't work
+      app.vent.on('question:showAnswers', function(model) {
+        console.log("question:showAnswers: ",model);
+        self.view.render();
+      });
+
+      this.listenTo(model, 'reset', function (m) {
+        console.log("reset: ", self.model);
+      });
 
       var questionHeaderView = new QuestionHeaderView({
         model: model,
@@ -55,7 +60,7 @@ function (app, Marionette, Model, Collection, View, QuestionHeaderView, question
       console.log("questionHeaderView: ",questionHeaderView);
 
       // show loading screen
-      app.content.show(view);
+      app.content.show(self.view);
       app.header.show(questionHeaderView);
     }
 

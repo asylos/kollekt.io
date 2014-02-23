@@ -12,11 +12,18 @@ function (app, Marionette, template) {
 
   'use strict';
 
-  var view = Marionette.ItemView.extend({
+  return Marionette.ItemView.extend({
     className: 'questionView paddedContainer',
-    template : template
-  });
+    template : template,
 
-  return view;
+    events : {
+      'click .addAnswer' : 'addAnswer'
+    },
+
+    addAnswer: function(event){
+      event.preventDefault();
+      app.router.navigate(Backbone.history.fragment+'/add-answer', { trigger: true });
+    }
+  });
 
 });

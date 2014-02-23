@@ -100,6 +100,12 @@ html {
     &.padLeft{
       margin-left: 3px;
     }
+    &.largePadRight{
+      margin-right: 1.5em;
+    }
+    &.largePadLeft{
+      margin-left: 1.5em;
+    }
   }
 }
 
@@ -143,6 +149,20 @@ a {
   margin: -.5em;
   &:hover{
     color: #0AF;
+  }
+  &.blockButton{
+    display: block;
+    width: 100%;
+    padding: 0 1em;
+    margin: 0;
+    background: $darkBackground;
+    color: $lightText;
+    line-height: 3em;
+    &:hover,
+    &:focus{
+      background: $mediumBackground;
+      color: $darkText;
+    }
   }
 }
 
@@ -264,6 +284,22 @@ header{
 
 #content .questionView{
   margin: $padding;
+  footer{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+}
+
+#details{
+  position: absolute;
+  top: 0;
+  left: 99%;
+  width: 100%;
+  min-height: 100%;
+  background: #F00;
+  z-index: 100;
 }
 
 

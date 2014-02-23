@@ -17,13 +17,15 @@ function (app, Marionette, BaseRouter) {
     var Router = BaseRouter.extend({
 
       routes: {
-        ''                      : 'index',
-        'signup'                : 'signup',
-        'signin'                : 'signin',
-        'signout'               : 'signout',
-        'question/:id'          : 'question',
+        ''                                  : 'index',
+        'signup'                            : 'signup',
+        'signin'                            : 'signin',
+        'signout'                           : 'signout',
+        'question/:id'                      : 'question',
+        'question/:id/add-answer'           : 'addAnswer',
         // The slug is never used, it's just for read- and bookmarkability
-        'question/:id/:slug'    : 'question'
+        'question/:id/:slug'                : 'question',
+        'question/:id/:slug/add-answer'     : 'addAnswer',
       },
 
       index: function () {
@@ -56,6 +58,17 @@ function (app, Marionette, BaseRouter) {
             id: id
           });
         });
+      },
+
+      addAnswer: function ( id, slug ) {
+        console.log("addAnswer: ",id);
+        /*
+        require(['controllers/answer'], function (Controller) {
+          new Controller({
+            id: id
+          });
+        });
+        */
       }
 
     });
