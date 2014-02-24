@@ -7,14 +7,15 @@
     "node": ">= 0.10.x"
   },
   "dependencies": {
-    "hoodie-server": "0.9.13",
+    "hoodie-server": "0.9.15",
     "hoodie-plugin-appconfig": "~0.1.0",
     "hoodie-plugin-email": "~0.1.1",
     "hoodie-plugin-users": "0.1.0",
     "grunt": "~0.4.2",
     "grunt-contrib-compass": "~0.7.2",
     "grunt-hapi": "~0.7.0",
-    "hapi": "~2.4.0"
+    "hapi": "~2.4.0",
+    "hoodie-plugin-global-share": "~1.0.2"
   },
   "devDependencies": {
     "grunt-contrib-copy": "~0.2.0",
@@ -37,7 +38,8 @@
   },
   "hoodie": {
     "plugins": [
-      "hoodie-plugin-users"
+      "hoodie-plugin-users",
+      "hoodie-plugin-global-share"
     ]
   }
 }
