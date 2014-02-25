@@ -27,7 +27,7 @@ function (app, Marionette, Model, View) {
         model: self.model
       });
 
-      app.content.show(self.view);
+      app.overview.show(self.view);
     }
 
   });

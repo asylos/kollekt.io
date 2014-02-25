@@ -7,7 +7,7 @@ module.exports = function (grunt) {
 
     jshint: {
       files: [
-        'Gruntfile.js',
+        //'Gruntfile.js',
         'www/tests/app/**/*.js',
         'www/app/**/*.js'
       ],
@@ -18,13 +18,45 @@ module.exports = function (grunt) {
 
     watch: {
       files: ['<%= jshint.files %>', 'www/assets/css/app/*.scss', 'www/app/templates/*.html'],
-      tasks: ['jshint', 'compass']
+      tasks: ['jshint', 'compass'],
+      options: {
+        livereload: true
+      }
     },
 
     hoodie: {
       start: {
         options: {
+          callback: function (config) {
+            grunt.config.set('cfg', config);
+          }
         }
+      }
+    },
+
+    connect: {
+      server: {
+        options: {
+          port: 9000,
+          base: 'www',
+          hostname: '0.0.0.0',
+          middleware: function (connect, options) {
+            var proxy = require('grunt-connect-proxy/lib/utils').proxyRequest;
+            return [
+            proxy,
+            connect.static(options.base),
+            connect.directory(options.base)
+            ];
+          }
+        },
+        proxies: [
+        {
+          context: '/_api',
+          host: '<%= cfg.stack.www.host %>',
+          port: '<%= cfg.stack.www.port %>'
+        }
+
+        ]
       }
     },
 
@@ -126,11 +158,13 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-requirejs');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-hoodie');
+  grunt.loadNpmTasks('grunt-contrib-connect');
+  grunt.loadNpmTasks('grunt-connect-proxy');
   grunt.loadNpmTasks('grunt-shell');
 
   grunt.registerTask('default', ['jshint', 'watch']);
   grunt.registerTask('test', ['shell:test']);
   grunt.registerTask('build', ['jshint', 'compass', 'copy', 'requirejs']);
-  grunt.registerTask('server', ['hoodie', 'watch']);
+  grunt.registerTask('server', ['hoodie', 'connect:server', 'configureProxies:server', 'watch']);
 
 };

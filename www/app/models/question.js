@@ -44,7 +44,7 @@ function (BaseModel) {
     },
 
     fetchAnswers: function(){
-      console.log("this.attributes.id",this.attributes.id);
+      console.log("fetchAnswers",this.attributes.id);
       var questionId = this.attributes.id;
       Backbone.hoodie.store.findAll(function(object){
         if(object.type === "answer" && object.belongsToQuestion === questionId){
@@ -57,7 +57,7 @@ function (BaseModel) {
     onAnswers: function(answers){
       console.log("onAnswers: ", answers);
       this.attributes.answers = answers;
-      app.vent.trigger('question:showAnswers', this);
+      app.vent.trigger('question:showAnswers:'+this.attributes.id, this);
     },
 
     onAnswersFail: function(data){

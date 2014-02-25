@@ -34,7 +34,7 @@ function (app, Marionette, Model, View, HeaderView, headerTemplate) {
         template : headerTemplate
       });
 
-      app.content.show(self.view);
+      app.overview.show(self.view);
       app.header.show(self.headerView);
 
     }

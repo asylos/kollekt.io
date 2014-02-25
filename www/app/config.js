@@ -15,7 +15,7 @@ require.config({
     backbone:      '/lib/backbone/backbone',
     marionette:    '/lib/backbone.marionette/lib/backbone.marionette',
     validation:    '/lib/backbone-validation/dist/backbone-validation',
-    hoodie:        '/lib/hoodie/dist/hoodie',
+    hoodie:        '/_api/_files/hoodie',
     backboneHoodie:'/lib/backbone-hoodie/src/backbone-hoodie',
     urlify:        '/lib/urlify/index',
     routeFilter:   '/lib/backbone.routefilter/index'

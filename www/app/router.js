@@ -61,14 +61,12 @@ function (app, Marionette, BaseRouter) {
       },
 
       addAnswer: function ( id, slug ) {
-        console.log("addAnswer: ",id);
-        /*
-        require(['controllers/answer'], function (Controller) {
+        require(['controllers/question'], function (Controller) {
           new Controller({
-            id: id
+            id: id,
+            addAnswer: true
           });
         });
-        */
       }
 
     });

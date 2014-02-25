@@ -10,6 +10,7 @@
 @import "../../../lib/normalize-scss/_normalize.scss";
 
 @import "compass/css3/transform";
+@import "compass/css3/transition";
 @import "compass/css3/border-radius";
 
 // Variables
@@ -163,6 +164,10 @@ a {
       background: $mediumBackground;
       color: $darkText;
     }
+    &.half{
+      width: 50%;
+      float:left;
+    }
   }
 }
 
@@ -174,6 +179,7 @@ a {
 
 input[type="text"],
 input[type="password"]{
+  -webkit-appearance: none;
   @include border-radius(5px);
   outline: none;
   width: 100%;
@@ -195,6 +201,8 @@ input[type="submit"]{
   padding: 1rem;
   margin-top: $padding;
   transition: all 0.3s ease-out;
+  background-color: $mediumBackground;
+  color: $darkText;
   &:hover, &:focus{
     background-color: $darkBackground;
     color: $lightText;
@@ -204,6 +212,22 @@ input[type="submit"]{
 label{
   @include font-size(20);
   margin-bottom: $padding;
+}
+
+textarea {
+  width: 95%;
+  border: 0;
+  background: $brightestBackground;
+  color: $darkText;
+  border-radius: 5px;
+  margin: 0 2.5% 1em;
+  padding: .5em;
+  resize: vertical;
+  &:focus{
+    background-color: $darkBackground;
+    color: $lightText;
+    outline: none;
+  }
 }
 
 // Structure
@@ -273,6 +297,14 @@ header{
   }
 }
 
+#footer{
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1111;
+}
+
 .paddedContainer {
   margin: $padding;
   input{
@@ -280,12 +312,19 @@ header{
   }
 }
 
+
+#content{
+  position: absolute;
+  width: 100%;
+  overflow-x: hidden;
+}
+
 // Question view
 
 #content .questionView{
   margin: $padding;
   footer{
-    position: absolute;
+    position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
@@ -295,11 +334,24 @@ header{
 #details{
   position: absolute;
   top: 0;
-  left: 99%;
+  left: 100%;
   width: 100%;
   min-height: 100%;
   background: #F00;
   z-index: 100;
+  // for mobile scrollability
+  margin-bottom: 120px;
+  @include single-transition(left, 0.3s, ease-out);
+  background-color: $background;
+  &.active{
+    left: 0%;
+  }
+  label{
+    @include font-size(14);
+    margin-bottom: $padding;
+    margin-left: $padding;
+    color: $mediumText;
+  }
 }
 
 

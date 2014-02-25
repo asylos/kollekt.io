@@ -9,6 +9,7 @@ require([
   'models/config',
   'urlify',
   'backbone',
+  'hoodie',
   'backboneHoodie'  //is going to be globally available on the backbone object
 ],
 

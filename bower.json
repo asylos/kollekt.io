@@ -12,7 +12,7 @@
     "backbone.marionette": "1.0.2",
     "backbone.marionette.hbs": "0.0.4",
     "expect": "~0.2.0",
-    "hoodie": "~0.6.4",
+    "hoodie": "http://127.0.0.1:6058/_api/_files/hoodie.js",
     "sinonjs": "~1.7.1",
     "backbone-hoodie": "~1.0.2",
     "backbone-validation": "~0.9.1",
