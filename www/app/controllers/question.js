@@ -36,9 +36,13 @@ function (app, Marionette, Model, AnswersCollection, View, AddView, QuestionHead
         console.log("showAnswers: ");
 
         this.collection = new AnswersCollection();
-        this.collection.fetch();
 
-        this.collection.done(this.onAnswers).fail(this.onAnswersFail);
+        this.listenTo(this.collection, 'reset', function (model) {
+          console.log("model listener: ",model);
+          //this.currentCollection = this.collection.filter
+        });
+
+        //this.collection.done(this.onAnswers).fail(this.onAnswersFail);
 
 
         //console.log("showAnswers vent listener");

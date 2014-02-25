@@ -15,9 +15,9 @@ function (BaseModel) {
     initialize: function(){
       _.bindAll(this, 'onQuestion', 'onNoQuestion');
 
-
       // SVEN: This is probably a rubbish way to do this, but I'm not sure how to
       // properly give a model an id and have it load the data into itself.
+      console.log("hoodie find question:",this.id);
       Backbone.hoodie.store.find('question', this.id)
       .done(this.onQuestion)
       .fail(this.onNoQuestion);

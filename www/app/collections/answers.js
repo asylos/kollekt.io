@@ -11,19 +11,19 @@ function (BaseCollection, Model) {
     model: Model,
 
     initialize: function() {
-
       this.fetch();
 
     },
 
     fetch: function() {
-      /*console.log("fetchAnswers",this.attributes.id);
-      var questionId = this.attributes.id;
-      */
-      return Backbone.hoodie.store.findAll('answer');
+      var self = this;
+      return Backbone.hoodie.store.findAll('answer').done(function(answer){
+        self.reset(answer);
+      });
     },
 
     belongsToQuestion: function (model) {
+      console.log("filter belongsToQuestion: ",model);
       if (model.get('type') === "answer" && model.get('belongsToQuestion') === questionId){
         return true;
       }
