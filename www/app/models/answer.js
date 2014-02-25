@@ -15,7 +15,6 @@ function (BaseModel) {
     initialize: function(){
       _.bindAll(this, 'onQuestion', 'onNoQuestion');
 
-
       // SVEN: This is probably a rubbish way to do this, but I'm not sure how to
       // properly give a model an id and have it load the data into itself.
       Backbone.hoodie.store.find('question', this.id)
@@ -34,8 +33,6 @@ function (BaseModel) {
       this.attributes.id = question.id;
       this.attributes.question = question.question;
       this.attributes.createdAt = question.createdAt;
-      console.log("trigger question: ",question.id);
-      app.vent.trigger('question:showAnswers', {trigger: true});
     },
 
     onNoQuestion: function (data){

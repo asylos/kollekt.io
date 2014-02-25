@@ -6,7 +6,7 @@ define([
   'helpers/namespace',
   'marionette',
   'models/question',
-  'collections/questions',
+  'collections/answers',
   'views/question',
   'views/question/add',
   // Headers
@@ -18,7 +18,7 @@ define([
   'hbs!templates/question/footerAdd'
 ],
 
-function (app, Marionette, Model, Collection, View, AddView, QuestionHeaderView, questionHeaderTemplate, FooterView, FooterTemplateDefault, FooterTemplateAdd) {
+function (app, Marionette, Model, AnswersCollection, View, AddView, QuestionHeaderView, questionHeaderTemplate, FooterView, FooterTemplateDefault, FooterTemplateAdd) {
 
   "use strict";
 
@@ -28,14 +28,21 @@ function (app, Marionette, Model, Collection, View, AddView, QuestionHeaderView,
       this.options = options || {};
       var self = this;
 
-      this.collection = new Collection();
+      Backbone.hoodie.store.on('change:answer', this.onNewAnswerFromStore);
 
       // FIX: find out why listenTo doesn't work
-      console.log("listen to: ",'question:showAnswers'+this.options.id);
-      app.vent.on('question:showAnswers'+this.options.id, function(model) {
-        console.log("showAnswers vent listener");
-        self.view.render();
-        debugger;
+      console.log("listen to: ",'question:showAnswers:'+this.options.id);
+      app.vent.on('question:showAnswers', function(model) {
+        console.log("showAnswers: ");
+
+        this.collection = new AnswersCollection();
+        this.collection.fetch();
+
+        this.collection.done(this.onAnswers).fail(this.onAnswersFail);
+
+
+        //console.log("showAnswers vent listener");
+        //self.view.render();
       });
 
       var model = new Model({
@@ -97,6 +104,32 @@ function (app, Marionette, Model, Collection, View, AddView, QuestionHeaderView,
     onAddAnswerFail: function(error){
       console.log("onAddAnswerFail: ",error);
     },
+
+    onAnswers: function(answers) {
+
+      debugger
+      console.log("onAnswers: ", answers, 'question:showAnswers:'+this.attributes.id);
+
+      //app.vent.trigger('question:showAnswers:'+this.attributes.id, this);
+    },
+
+    onAnswersFail: function(data){
+      console.log("onAnswersFail: ", data);
+    },
+
+    onNewAnswerFromStore: function(eventName, answer){
+      /*
+      var questionId = this.attributes.id;
+      // Only update if the answer belongs to this question
+      if(answer.belongsToQuestion === questionId ) {
+        // Only save in the model if the answer is new
+        if(eventName === 'add'){
+          this.attributes.answers.push(answer);
+        }
+        app.vent.trigger('question:showAnswers', this);
+      }
+      */
+    }
   });
 
   return controller;
