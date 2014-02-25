@@ -33,19 +33,18 @@ function (app, Marionette, Model, AnswersCollection, View, AddView, AnswersListV
 
       Backbone.hoodie.store.on('change:answer', this.onNewAnswerFromStore);
 
+      // Fetch all the answers
       app.vent.on('question:showAnswers', function(model) {
         this.collection = new AnswersCollection({
           id: self.options.id
         });
 
         this.listenTo(this.collection, 'reset', function (model) {
+          // Filter the answers to only show those belonging to this question
           this.filteredAnswers = new AnswersCollection(this.collection.belongsToQuestion(model));
-          // Answers compositeView
-          console.log("filteredAnswers: ",this.filteredAnswers);
           var answersView = new AnswersListView({
             collection: this.filteredAnswers
           });
-          console.log("answersView: ",answersView);
           app.overview.show(answersView);
         });
 
@@ -62,7 +61,6 @@ function (app, Marionette, Model, AnswersCollection, View, AddView, AnswersListV
       self.view = new View({
         model: model
       });
-
 
       // Header view
       var questionHeaderView = new QuestionHeaderView({

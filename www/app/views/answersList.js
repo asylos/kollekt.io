@@ -6,9 +6,10 @@ define([
   'helpers/namespace',
   'marionette',
   'hbs!templates/answer',
+  'slip'
 ],
 
-function (app, Marionette, tmpl) {
+function (app, Marionette, tmpl, Slip) {
 
   'use strict';
 
@@ -41,6 +42,11 @@ function (app, Marionette, tmpl) {
       var self = this;
 
       console.log("answersList has rendered");
+      console.log("afterRender: ", $('#slipList').length);
+      if($('#slipList').length !== 0){
+        console.log("Slip attached!");
+        new Slip($('#slipList')[0]);
+      }
     }
 
   });

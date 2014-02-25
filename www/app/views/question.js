@@ -5,24 +5,16 @@
 define([
   'helpers/namespace',
   'marionette',
-  'hbs!templates/question',
-  'slip'
+  'hbs!templates/question'
 ],
 
-function (app, Marionette, template, Slip) {
+function (app, Marionette, template) {
 
   'use strict';
 
   return Marionette.ItemView.extend({
     className: 'questionView',
-    template : template,
-    onRender: function () {
-      console.log("afterRender: ", $('#slipList').length);
-      if($('#slipList').length !== 0){
-        console.log("Slip attached!");
-        new Slip($('#slipList')[0]);
-      }
-    }
+    template : template
   });
 
 });
