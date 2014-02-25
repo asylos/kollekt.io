@@ -10,9 +10,8 @@ function (BaseCollection, Model) {
   return BaseCollection.extend({
     model: Model,
 
-    initialize: function() {
-      this.fetch();
-
+    initialize: function(options) {
+      this.options = options || {};
     },
 
     fetch: function() {
@@ -22,11 +21,15 @@ function (BaseCollection, Model) {
       });
     },
 
-    belongsToQuestion: function (model) {
-      console.log("filter belongsToQuestion: ",model);
-      if (model.get('type') === "answer" && model.get('belongsToQuestion') === questionId){
-        return true;
-      }
+    belongsToQuestion: function (answers) {
+      var self = this;
+      var payload = [];
+      this.filter(function(answers) {
+        if (answers.get('type') === "answer" && answers.get('belongsToQuestion') === self.options.id){
+          payload.push(answers.toJSON());
+        }
+      });
+      return payload;
     }
 
   });

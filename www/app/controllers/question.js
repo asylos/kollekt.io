@@ -30,23 +30,19 @@ function (app, Marionette, Model, AnswersCollection, View, AddView, QuestionHead
 
       Backbone.hoodie.store.on('change:answer', this.onNewAnswerFromStore);
 
-      // FIX: find out why listenTo doesn't work
       console.log("listen to: ",'question:showAnswers:'+this.options.id);
+
       app.vent.on('question:showAnswers', function(model) {
-        console.log("showAnswers: ");
 
-        this.collection = new AnswersCollection();
-
-        this.listenTo(this.collection, 'reset', function (model) {
-          console.log("model listener: ",model);
-          //this.currentCollection = this.collection.filter
+        this.collection = new AnswersCollection({
+          id: self.options.id
         });
 
-        //this.collection.done(this.onAnswers).fail(this.onAnswersFail);
+        this.listenTo(this.collection, 'reset', function (model) {
+          this.filteredAnswers = new AnswersCollection(this.collection.belongsToQuestion(model));
+        });
 
-
-        //console.log("showAnswers vent listener");
-        //self.view.render();
+        this.collection.fetch();
       });
 
       var model = new Model({
@@ -57,7 +53,6 @@ function (app, Marionette, Model, AnswersCollection, View, AddView, QuestionHead
       self.view = new View({
         model: model
       });
-
 
       var questionHeaderView = new QuestionHeaderView({
         model: model,
@@ -95,6 +90,10 @@ function (app, Marionette, Model, AnswersCollection, View, AddView, QuestionHead
       app.overview.show(self.view);
       app.header.show(questionHeaderView);
       app.footer.show(footer);
+    },
+
+    filterAnswers: function(model){
+      this.filteredAnswersCollection = new Collection()
     },
 
     addAnswer: function(answer){
