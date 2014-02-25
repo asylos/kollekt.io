@@ -9,6 +9,7 @@ define([
   'collections/answers',
   'views/question',
   'views/question/add',
+  'views/answersList',
   // Headers
   'views/header',
   'hbs!templates/questionHeader',
@@ -18,7 +19,7 @@ define([
   'hbs!templates/question/footerAdd'
 ],
 
-function (app, Marionette, Model, AnswersCollection, View, AddView, QuestionHeaderView, questionHeaderTemplate, FooterView, FooterTemplateDefault, FooterTemplateAdd) {
+function (app, Marionette, Model, AnswersCollection, View, AddView, AnswersListView, QuestionHeaderView, questionHeaderTemplate, FooterView, FooterTemplateDefault, FooterTemplateAdd) {
 
   "use strict";
 
@@ -28,32 +29,42 @@ function (app, Marionette, Model, AnswersCollection, View, AddView, QuestionHead
       this.options = options || {};
       var self = this;
 
+      // Events
+
       Backbone.hoodie.store.on('change:answer', this.onNewAnswerFromStore);
 
-      console.log("listen to: ",'question:showAnswers:'+this.options.id);
-
       app.vent.on('question:showAnswers', function(model) {
-
         this.collection = new AnswersCollection({
           id: self.options.id
         });
 
         this.listenTo(this.collection, 'reset', function (model) {
           this.filteredAnswers = new AnswersCollection(this.collection.belongsToQuestion(model));
+          // Answers compositeView
+          console.log("filteredAnswers: ",this.filteredAnswers);
+          var answersView = new AnswersListView({
+            collection: this.filteredAnswers
+          });
+          console.log("answersView: ",answersView);
+          app.overview.show(answersView);
         });
 
         this.collection.fetch();
       });
 
+      // Question model
       var model = new Model({
         id: this.options.id,
         currentUser: Backbone.hoodie.account.username
       });
 
+      // Overview view (left side)
       self.view = new View({
         model: model
       });
 
+
+      // Header view
       var questionHeaderView = new QuestionHeaderView({
         model: model,
         className: 'questionView',
@@ -62,8 +73,8 @@ function (app, Marionette, Model, AnswersCollection, View, AddView, QuestionHead
 
       var footer;
 
-      // Show the add answer interface
       if(this.options.addAnswer){
+        // render the add answer interface in the details region (right side)
         var addView = new AddView({
           model: model
         });
@@ -77,6 +88,7 @@ function (app, Marionette, Model, AnswersCollection, View, AddView, QuestionHead
           self.addAnswer(model);
         });
       } else {
+        // render the answers list in the overview region (left side)
         if(app.details.$el){
           app.details.$el.removeClass('active');
         }
@@ -86,14 +98,9 @@ function (app, Marionette, Model, AnswersCollection, View, AddView, QuestionHead
         });
       }
 
-      // show loading screen
-      app.overview.show(self.view);
+      //app.overview.show(self.view);
       app.header.show(questionHeaderView);
       app.footer.show(footer);
-    },
-
-    filterAnswers: function(model){
-      this.filteredAnswersCollection = new Collection()
     },
 
     addAnswer: function(answer){
