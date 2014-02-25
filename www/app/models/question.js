@@ -55,7 +55,7 @@ function (BaseModel) {
     },
 
     onAnswers: function(answers){
-      console.log("onAnswers: ", answers);
+      console.log("onAnswers: ", answers, 'question:showAnswers:'+this.attributes.id);
       this.attributes.answers = answers;
       app.vent.trigger('question:showAnswers:'+this.attributes.id, this);
     },

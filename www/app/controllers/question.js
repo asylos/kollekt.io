@@ -30,6 +30,14 @@ function (app, Marionette, Model, Collection, View, AddView, QuestionHeaderView,
 
       this.collection = new Collection();
 
+      // FIX: find out why listenTo doesn't work
+      console.log("listen to: ",'question:showAnswers'+this.options.id);
+      app.vent.on('question:showAnswers'+this.options.id, function(model) {
+        console.log("showAnswers vent listener");
+        self.view.render();
+        debugger;
+      });
+
       var model = new Model({
         id: this.options.id,
         currentUser: Backbone.hoodie.account.username
@@ -38,7 +46,6 @@ function (app, Marionette, Model, Collection, View, AddView, QuestionHeaderView,
       self.view = new View({
         model: model
       });
-
 
 
       var questionHeaderView = new QuestionHeaderView({
@@ -60,10 +67,8 @@ function (app, Marionette, Model, Collection, View, AddView, QuestionHeaderView,
           model: model,
           template: FooterTemplateAdd
         });
-        // FIX: find out why listenTo doesn't work
-        app.vent.on('question:showAnswers'+this.options.id, function(model) {
-          console.log("question:showAnswers: ",model);
-          self.view.render();
+        app.vent.once('question:addAnswer:'+this.options.id, function(model) {
+          self.addAnswer(model);
         });
       } else {
         if(app.details.$el){
@@ -72,10 +77,6 @@ function (app, Marionette, Model, Collection, View, AddView, QuestionHeaderView,
         footer = new FooterView({
           model: model,
           template: FooterTemplateDefault
-        });
-        app.vent.once('question:addAnswer:'+this.options.id, function(model) {
-          console.log("vent question:addAnswer: ",model);
-          self.addAnswer(model);
         });
       }
 
@@ -86,12 +87,10 @@ function (app, Marionette, Model, Collection, View, AddView, QuestionHeaderView,
     },
 
     addAnswer: function(answer){
-      console.log("SAVING THE ANSWER NOW",answer);
       Backbone.hoodie.store.add('answer', answer).done(this.onAddAnswer).fail(this.onAddAnswerFailed);
     },
 
     onAddAnswer: function(answer){
-      console.log("ANSWER SAVED",answer);
       app.router.navigate(Backbone.history.fragment.replace('/add-answer',''), { trigger: true });
     },
 

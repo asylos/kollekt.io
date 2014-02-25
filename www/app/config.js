@@ -18,7 +18,8 @@ require.config({
     hoodie:        '/_api/_files/hoodie',
     backboneHoodie:'/lib/backbone-hoodie/src/backbone-hoodie',
     urlify:        '/lib/urlify/index',
-    routeFilter:   '/lib/backbone.routefilter/index'
+    routeFilter:   '/lib/backbone.routefilter/index',
+    slip:          '/lib/slip/slip'
   },
 
   shim: {
@@ -43,6 +44,9 @@ require.config({
     'routeFilter': {
       deps: ['backbone'],
       exports: 'Backbone.Router'
+    },
+    'slip': {
+      exports: 'slip'
     }
   }
 });
