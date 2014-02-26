@@ -17,15 +17,17 @@ function (app, Marionette, BaseRouter) {
     var Router = BaseRouter.extend({
 
       routes: {
-        ''                                  : 'index',
-        'signup'                            : 'signup',
-        'signin'                            : 'signin',
-        'signout'                           : 'signout',
-        'question/:id'                      : 'question',
-        'question/:id/add-answer'           : 'addAnswer',
+        ''                                                          : 'index',
+        'signup'                                                    : 'signup',
+        'signin'                                                    : 'signin',
+        'signout'                                                   : 'signout',
+        'question/:id'                                              : 'question',
+        'question/:id/add-answer'                                   : 'addAnswer',
+        'question/:id/show-answer/:answerid'                        : 'showAnswer',
         // The slug is never used, it's just for read- and bookmarkability
-        'question/:id/:slug'                : 'question',
-        'question/:id/:slug/add-answer'     : 'addAnswer',
+        'question/:id/:slug'                                        : 'question',
+        'question/:id/:slug/add-answer'                             : 'addAnswer',
+        'question/:id/:slug/show-answer/:answerid'                  : 'showAnswer',
       },
 
       index: function () {
@@ -64,7 +66,17 @@ function (app, Marionette, BaseRouter) {
         require(['controllers/question'], function (Controller) {
           new Controller({
             id: id,
-            addAnswer: true
+            action: 'addAnswer'
+          });
+        });
+      },
+
+      showAnswer: function ( id, slug, answerid ) {
+        require(['controllers/question'], function (Controller) {
+          new Controller({
+            id: id,
+            answerid: answerid,
+            action: 'showAnswer'
           });
         });
       }

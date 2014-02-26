@@ -17,12 +17,13 @@ function (app, Marionette, tmpl, Slip) {
     tagName: 'li',
     template: tmpl,
     events : {
-      'click li' : 'showAnswer',
+      'click' : 'showAnswer',
     },
 
-    showAnswer: function() {
-      // TODO build URL and go there
-      //app.vent.trigger('asset:graphics:show', this.model);
+    showAnswer: function(event) {
+      if($(event.target).prop('tagName') === 'LI'){
+        app.router.navigate(Backbone.history.fragment+'/show-answer/'+this.model.attributes.id, { trigger: true });
+      }
     },
 
     /*
@@ -56,6 +57,12 @@ function (app, Marionette, tmpl, Slip) {
             e.preventDefault();
           }
         }, false);
+
+        /*
+        ol.addEventListener('slip:tap', function(e){
+          console.log("e: ",e);
+        }, false);
+        */
 
         ol.addEventListener('slip:reorder', function(e){
           e.target.parentNode.insertBefore(e.target, e.detail.insertBefore);

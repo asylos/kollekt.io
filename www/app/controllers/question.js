@@ -71,7 +71,11 @@ function (app, Marionette, Model, AnswersCollection, View, AddView, AnswersListV
 
       var footer;
 
-      if(this.options.addAnswer){
+      switch(this.options.action){
+      case 'showAnswer':
+
+        break;
+      case 'addAnswer':
         // render the add answer interface in the details region (right side)
         var addView = new AddView({
           model: model
@@ -83,22 +87,30 @@ function (app, Marionette, Model, AnswersCollection, View, AddView, AnswersListV
           model: model,
           template: FooterTemplateAdd
         });
-        app.vent.once('question:addAnswer:'+this.options.id, function(model) {
-          self.addAnswer(model);
+        app.vent.once('question:addAnswer', function(model) {
+          if(model.belongsToQuestion === self.options.id){
+            self.addAnswer(model);
+          }
         });
-      } else {
+        break;
+      default:
         // render the answers list in the overview region (left side)
-        if(app.details.$el){
-          app.details.$el.removeClass('active');
-        }
-        app.overview.$el.removeClass('hidden');
         footer = new FooterView({
           model: model,
           template: FooterTemplateDefault
         });
-        app.details.reset();
-        $('body').scrollTop(0);
+        if(app.details.$el){
+          app.details.$el.removeClass('active');
+        }
+        _.delay(function(){
+          app.details.reset();
+          app.overview.$el.removeClass('hidden');
+        }, 333);
+        break;
       }
+
+      // Scroll to top
+      $('body').scrollTop(0);
 
       //app.overview.show(self.view);
       app.header.show(questionHeaderView);
@@ -106,6 +118,7 @@ function (app, Marionette, Model, AnswersCollection, View, AddView, AnswersListV
     },
 
     addAnswer: function(answer){
+      console.log("store answer: ",answer);
       Backbone.hoodie.store.add('answer', answer).done(this.onAddAnswer).fail(this.onAddAnswerFailed);
     },
 

@@ -40,7 +40,7 @@ function (app, Marionette) {
       };
       console.log("answer: ",answer);
       this.blockSubmission = true;
-      app.vent.trigger('question:addAnswer:'+this.model.attributes.id, answer);
+      app.vent.trigger('question:addAnswer', answer);
     },
 
     cancelAnswer: function(event){

@@ -364,6 +364,7 @@ header{
     padding: .5em 1em;
     background-color: $mediumBackground;
     z-index: 0;
+    cursor: pointer;
     &:nth-child(even){
       background-color: $background;
     }
