@@ -6,10 +6,11 @@ define([
   'helpers/namespace',
   'marionette',
   'hbs!templates/answer',
-  'slip'
+  'slip',
+  'views/question/noanswers'
 ],
 
-function (app, Marionette, tmpl, Slip) {
+function (app, Marionette, tmpl, Slip, NoAnswersView) {
 
   'use strict';
 
@@ -32,6 +33,7 @@ function (app, Marionette, tmpl, Slip) {
     tagName: 'ul',
     id: 'slipList',
     itemView: Answer,
+    emptyView: NoAnswersView,
     onDomRefresh: function() {
       var self = this;
 

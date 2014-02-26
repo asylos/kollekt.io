@@ -46,7 +46,6 @@ function (app, Marionette, Model, AnswersCollection, AnswersListView, View, AddV
         this.listenTo(self.collection, 'reset', function (model) {
           // Filter the answers to only show those belonging to this question
           self.filteredAnswers = new AnswersCollection(self.collection.belongsToQuestion(model));
-          console.log("filteredAnswers: ",self.filteredAnswers);
           var answersView = new AnswersListView({
             collection: self.filteredAnswers
           });
@@ -78,7 +77,6 @@ function (app, Marionette, Model, AnswersCollection, AnswersListView, View, AddV
         className: 'questionView',
         template : questionHeaderTemplate
       });
-      console.log("questionHeaderView: ",questionHeaderView);
 
       var footer;
 
@@ -150,8 +148,12 @@ function (app, Marionette, Model, AnswersCollection, AnswersListView, View, AddV
           app.details.$el.removeClass('active');
         }
         _.delay(function(){
-          app.details.reset();
-          app.overview.$el.removeClass('hidden');
+          if(app.details.$el){
+            app.details.reset();
+          }
+          if(app.overview.$el){
+            app.overview.$el.removeClass('hidden');
+          }
         }, 333);
         break;
       }
