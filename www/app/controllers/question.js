@@ -168,7 +168,7 @@ function (app, Marionette, Model, AnswersCollection, AnswersListView, View, AddV
 
     addAnswer: function(answer){
       console.log("store answer: ",answer);
-      Backbone.hoodie.store.add('answer', answer).done(this.onAddAnswer).fail(this.onAddAnswerFailed);
+      Backbone.hoodie.store.add('answer', answer).publish().done(this.onAddAnswer).fail(this.onAddAnswerFailed);
     },
 
     onAddAnswer: function(answer){

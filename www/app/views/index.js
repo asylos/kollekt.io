@@ -60,6 +60,7 @@ function (app, Marionette) {
         });
         // Immediately open the question's page
         this.model.save().done(function(data){
+          Backbone.hoodie.store.find('question', data.id).publish();
           // URLify the question and append it to the url, for the humans
           var urlifiedQuestion = app.urlify(data.question);
           app.router.navigate('question/'+data.id+'/'+urlifiedQuestion, {trigger: true});
