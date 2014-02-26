@@ -7,19 +7,23 @@ define([
   'marionette',
   'models/question',
   'collections/answers',
+  // Overview views
+  'views/answersList',
+  // Detail views
   'views/question',
   'views/question/add',
-  'views/answersList',
+  'views/question/show',
   // Headers
   'views/header',
   'hbs!templates/questionHeader',
   // Footers
   'views/footer',
   'hbs!templates/question/footerDefault',
-  'hbs!templates/question/footerAdd'
+  'hbs!templates/question/footerAdd',
+  'hbs!templates/question/footerShow'
 ],
 
-function (app, Marionette, Model, AnswersCollection, View, AddView, AnswersListView, QuestionHeaderView, questionHeaderTemplate, FooterView, FooterTemplateDefault, FooterTemplateAdd) {
+function (app, Marionette, Model, AnswersCollection, AnswersListView, View, AddView, ShowView, QuestionHeaderView, questionHeaderTemplate, FooterView, FooterTemplateDefault, FooterTemplateAdd, FooterTemplateShow) {
 
   "use strict";
 
@@ -35,26 +39,32 @@ function (app, Marionette, Model, AnswersCollection, View, AddView, AnswersListV
 
       // Fetch all the answers
       app.vent.on('question:showAnswers', function(model) {
-        this.collection = new AnswersCollection({
+        self.collection = new AnswersCollection({
           id: self.options.id
         });
 
-        this.listenTo(this.collection, 'reset', function (model) {
+        this.listenTo(self.collection, 'reset', function (model) {
           // Filter the answers to only show those belonging to this question
-          this.filteredAnswers = new AnswersCollection(this.collection.belongsToQuestion(model));
+          self.filteredAnswers = new AnswersCollection(self.collection.belongsToQuestion(model));
+          console.log("filteredAnswers: ",self.filteredAnswers);
           var answersView = new AnswersListView({
-            collection: this.filteredAnswers
+            collection: self.filteredAnswers
           });
           app.overview.show(answersView);
         });
 
-        this.collection.fetch();
+        self.collection.fetch();
       });
 
       // Question model
       var model = new Model({
-        id: this.options.id,
-        currentUser: Backbone.hoodie.account.username
+        id: this.options.id
+      });
+
+      model.set({
+        action: this.options.action,
+        currentUser: Backbone.hoodie.account.username,
+        currentUserID: Backbone.hoodie.id()
       });
 
       // Overview view (left side)
@@ -68,11 +78,48 @@ function (app, Marionette, Model, AnswersCollection, View, AddView, AnswersListV
         className: 'questionView',
         template : questionHeaderTemplate
       });
+      console.log("questionHeaderView: ",questionHeaderView);
 
       var footer;
 
       switch(this.options.action){
       case 'showAnswer':
+        // render the add answer interface in the details region (right side)
+        var answerModel = self.collection.getAnswerByID(self.collection.models, self.options.answerID);
+        var showView = new ShowView({
+          model: answerModel
+        });
+        app.details.show(showView);
+
+        app.details.$el.addClass('active');
+        app.overview.$el.addClass('hidden');
+        // check if the current user can edit the current answer
+        if(model.get('currentUserID') === answerModel.get('createdBy')){
+          answerModel.set({isEditable: true});
+        }
+        // Create footer for the show answer view
+        footer = new FooterView({
+          model: answerModel,
+          template: FooterTemplateShow
+        });
+        app.vent.once('question:editAnswerAsNew', function(model) {
+          if(model.belongsToQuestion === self.options.id){
+            //self.addAnswer(model);
+            console.log("editAnswerAsNew");
+          }
+        });
+        app.vent.once('question:editAnswer', function(model) {
+          if(model.belongsToQuestion === self.options.id){
+            //self.addAnswer(model);
+            console.log("editAnswer");
+          }
+        });
+        app.vent.once('question:deleteAnswer', function(model) {
+          if(model.belongsToQuestion === self.options.id){
+            //self.addAnswer(model);
+            console.log("deleteAnswer");
+          }
+        });
 
         break;
       case 'addAnswer':

@@ -1,5 +1,5 @@
 //
-//  ## models.question
+//  ## models.answer
 //
 
 define([
@@ -11,12 +11,18 @@ function (BaseModel) {
   'use strict';
 
   return BaseModel.extend({
-    type: 'question',
+    type: 'answer',
 
     defaults: {
-      question: '',
+      title: '',
+      belongsToQuestion: '',
       id: '',
-      createdAt: ''
+      createdAt: '',
+      createdBy: '',
+      original: '',
+      translation: '',
+      sourceName: '',
+      source: ''
     }
 
   });

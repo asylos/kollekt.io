@@ -4,5 +4,5 @@
   {{#icon "exit" className="small"}}{{/icon}}
 </a>
 {{/if}}
-<h2>{{question}}</h2>
+<h2><a href="/#question/{{id}}/{{urlify question}}">{{#if action}}{{#icon "arrow-left" className="inline padRight"}}{{/icon}}{{/if}}{{question}}</a></h2>
 <span class="meta">{{createdAt}}</span>

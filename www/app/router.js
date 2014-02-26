@@ -22,8 +22,8 @@ function (app, Marionette, BaseRouter) {
         'signin'                                                    : 'signin',
         'signout'                                                   : 'signout',
         'question/:id'                                              : 'question',
-        'question/:id/add-answer'                                   : 'addAnswer',
-        'question/:id/show-answer/:answerid'                        : 'showAnswer',
+        //'question/:id/add-answer'                                   : 'addAnswer',
+        //'question/:id/show-answer/:answerid'                        : 'showAnswer',
         // The slug is never used, it's just for read- and bookmarkability
         'question/:id/:slug'                                        : 'question',
         'question/:id/:slug/add-answer'                             : 'addAnswer',
@@ -72,10 +72,11 @@ function (app, Marionette, BaseRouter) {
       },
 
       showAnswer: function ( id, slug, answerid ) {
+        console.log("showAnswer: ",id, slug, answerid);
         require(['controllers/question'], function (Controller) {
           new Controller({
             id: id,
-            answerid: answerid,
+            answerID: answerid,
             action: 'showAnswer'
           });
         });

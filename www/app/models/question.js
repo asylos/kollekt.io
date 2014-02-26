@@ -26,7 +26,9 @@ function (BaseModel) {
     defaults: {
       question: '',
       id: '',
-      createdAt: ''
+      createdAt: '',
+      action: '',
+      currentUser: ''
     },
 
     onQuestion: function (question){

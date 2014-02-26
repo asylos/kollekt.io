@@ -24,15 +24,7 @@ function (app, Marionette, tmpl, Slip) {
       if($(event.target).prop('tagName') === 'LI'){
         app.router.navigate(Backbone.history.fragment+'/show-answer/'+this.model.attributes.id, { trigger: true });
       }
-    },
-
-    /*
-    onRender: function() {
-      if (this.model.get('active')) {
-        this.$el.addClass('active');
-      }
     }
-    */
 
   });
 
@@ -46,6 +38,11 @@ function (app, Marionette, tmpl, Slip) {
       if($('#slipList').length !== 0){
 
         var ol = document.getElementById('slipList');
+        ol.addEventListener('slip:beforeswipe', function(e) {
+          // NO SWIPE FOR YU!
+          e.preventDefault();
+        });
+
         ol.addEventListener('slip:beforereorder', function(e){
           if (/demo-no-reorder/.test(e.target.className)) {
             e.preventDefault();

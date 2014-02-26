@@ -16,8 +16,8 @@ function (BaseCollection, Model) {
 
     fetch: function() {
       var self = this;
-      return Backbone.hoodie.store.findAll('answer').done(function(answer){
-        self.reset(answer);
+      return Backbone.hoodie.store.findAll('answer').done(function(answers){
+        self.reset(answers);
       });
     },
 
@@ -30,6 +30,17 @@ function (BaseCollection, Model) {
         }
       });
       return payload;
+    },
+
+    getAnswerByID: function (answers, id) {
+      var self = this;
+      var result = this.find(function(answers) {
+        if (answers.get('type') === "answer" && answers.get('id') === id){
+          return answers;
+        }
+      });
+      console.log("result: ",result);
+      return result;
     }
 
   });

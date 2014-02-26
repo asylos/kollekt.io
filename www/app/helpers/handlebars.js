@@ -40,4 +40,9 @@ function (Handlebars) {
     return out;
   });
 
+  // Helper for SVG icons, turns {{urlify string}}, for example, into this:
+  Handlebars.registerHelper('urlify', function(string) {
+    return app.urlify(string);
+  });
+
 });
