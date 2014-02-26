@@ -45,8 +45,6 @@ function (app, Marionette, tmpl, Slip) {
       console.log("afterRender: ", $('#slipList').length);
       if($('#slipList').length !== 0){
         console.log("Slip attached!");
-        //new Slip($('#slipList')[0]);
-
 
         var ol = document.getElementById('slipList');
         ol.addEventListener('slip:beforereorder', function(e){

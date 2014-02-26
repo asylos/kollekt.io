@@ -27,10 +27,7 @@ function (app, Marionette, Collection, Model) {
 
 
     onAnswers: function(answers) {
-
-      debugger
       console.log("onAnswers: ", answers, 'question:showAnswers:'+this.attributes.id);
-
       //app.vent.trigger('question:showAnswers:'+this.attributes.id, this);
     },
 

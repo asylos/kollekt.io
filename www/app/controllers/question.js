@@ -114,8 +114,6 @@ function (app, Marionette, Model, AnswersCollection, View, AddView, AnswersListV
     },
 
     onAnswers: function(answers) {
-
-      debugger
       console.log("onAnswers: ", answers, 'question:showAnswers:'+this.attributes.id);
 
       //app.vent.trigger('question:showAnswers:'+this.attributes.id, this);
