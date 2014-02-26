@@ -78,6 +78,7 @@ function (app, Marionette, Model, AnswersCollection, View, AddView, AnswersListV
         });
         app.details.show(addView);
         app.details.$el.addClass('active');
+        app.overview.$el.addClass('hidden');
         footer = new FooterView({
           model: model,
           template: FooterTemplateAdd
@@ -90,10 +91,13 @@ function (app, Marionette, Model, AnswersCollection, View, AddView, AnswersListV
         if(app.details.$el){
           app.details.$el.removeClass('active');
         }
+        app.overview.$el.removeClass('hidden');
         footer = new FooterView({
           model: model,
           template: FooterTemplateDefault
         });
+        app.details.reset();
+        $('body').scrollTop(0);
       }
 
       //app.overview.show(self.view);

@@ -42,6 +42,10 @@ function (app, Marionette, appLayoutTmpl) {
           footer: '#footer'
         });
 
+        if ('ontouchstart' in document) {
+          $('body').removeClass('no-touch');
+        }
+
       }
     });
 

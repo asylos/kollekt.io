@@ -16,15 +16,16 @@ function (app, Marionette, tmpl, Slip) {
   var Answer = Marionette.ItemView.extend({
     tagName: 'li',
     template: tmpl,
-    /*
     events : {
-      'click li img' : 'show',
+      'click li' : 'showAnswer',
     },
 
-    show: function() {
-      app.vent.trigger('asset:graphics:show', this.model);
+    showAnswer: function() {
+      // TODO build URL and go there
+      //app.vent.trigger('asset:graphics:show', this.model);
     },
 
+    /*
     onRender: function() {
       if (this.model.get('active')) {
         this.$el.addClass('active');
@@ -41,20 +42,11 @@ function (app, Marionette, tmpl, Slip) {
     onDomRefresh: function() {
       var self = this;
 
-      console.log("answersList has rendered");
-      console.log("afterRender: ", $('#slipList').length);
       if($('#slipList').length !== 0){
-        console.log("Slip attached!");
 
         var ol = document.getElementById('slipList');
         ol.addEventListener('slip:beforereorder', function(e){
           if (/demo-no-reorder/.test(e.target.className)) {
-            e.preventDefault();
-          }
-        }, false);
-
-        ol.addEventListener('slip:beforeswipe', function(e){
-          if (e.target.nodeName === 'INPUT' || /demo-no-swipe/.test(e.target.className)) {
             e.preventDefault();
           }
         }, false);
@@ -65,17 +57,13 @@ function (app, Marionette, tmpl, Slip) {
           }
         }, false);
 
-        ol.addEventListener('slip:afterswipe', function(e){
-          e.target.parentNode.appendChild(e.target);
-        }, false);
-
         ol.addEventListener('slip:reorder', function(e){
           e.target.parentNode.insertBefore(e.target, e.detail.insertBefore);
+          app.vent.trigger('answers:reordered',{trigger: true});
           return false;
         }, false);
 
         new Slip(ol);
-
 
       }
     }
