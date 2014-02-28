@@ -129,14 +129,19 @@ module.exports = function (grunt) {
           optimizeAllPluginResources: true,
           paths: {
             app:           '.',
-            text:          '../lib/require-text/text',
+            text:          '../lib/requirejs-text/text',
             hbs:           '../lib/backbone.marionette.hbs/backbone.marionette.hbs',
             jquery:        '../lib/jquery/jquery',
             handlebars:    '../lib/handlebars/handlebars',
             lodash:        '../lib/lodash/lodash',
             backbone:      '../lib/backbone/backbone',
             marionette:    '../lib/backbone.marionette/lib/backbone.marionette',
-            hoodie:        '../lib/hoodie/dist/hoodie.min'
+            routeFilter:   '../lib/backbone.routefilter/index',
+            hoodie:        '../lib/hoodie/dist/hoodie.min',
+            validation:    '../lib/backbone-validation/dist/backbone-validation',
+            urlify:        '../lib/urlify/index',
+            slip:          '../lib/slip/slip',
+            backboneHoodie:'../lib/backbone-hoodie/src/backbone-hoodie',
           },
           shim: {
             'backbone': {
