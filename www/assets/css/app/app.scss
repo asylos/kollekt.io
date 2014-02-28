@@ -384,7 +384,7 @@ header{
     width: 100%;
     list-style: none;
     margin: 0;
-    padding: .5em 1em;
+    padding: .5em 90px .5em 1em;
     background-color: $zebraBackground;
     z-index: 0;
     cursor: pointer;
@@ -392,7 +392,6 @@ header{
       background-color: $background;
     }
     .instant {
-      @include unselectable;
       display: block;
       position: absolute;
       right: 0;
@@ -401,6 +400,21 @@ header{
       cursor: ns-resize;
       .icon{
         fill: $darkText;
+      }
+    }
+    .printToggle {
+      position: absolute;
+      right: 40px;
+      top: 0;
+      padding: .5em;
+      cursor: pointer;
+      .icon{
+        fill: $lightText;
+      }
+      &.active{
+        .icon{
+          fill: $darkText;
+        }
       }
     }
     &:first-child{

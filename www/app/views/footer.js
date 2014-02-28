@@ -1,5 +1,5 @@
 //
-// # views.questionHeader
+// # views.footer
 //
 
 define([
@@ -16,7 +16,8 @@ function (app, Marionette) {
     events : {
       'click .addAnswer' : 'addAnswer',
       'click .saveAnswer' : 'saveAnswer',
-      'click .cancelAnswer' : 'cancelAnswer'
+      'click .cancelAnswer' : 'cancelAnswer',
+      'click .printAnswers' : 'printAnswers'
     },
 
     addAnswer: function(event){
@@ -46,7 +47,14 @@ function (app, Marionette) {
     cancelAnswer: function(event){
       event.preventDefault();
       app.router.navigate(Backbone.history.fragment.replace('/add-answer', ''), { trigger: true });
+    },
+
+    printAnswers: function(event){
+      event.preventDefault();
+      app.vent.trigger('question:printAnswers');
     }
+
+
   });
 
   return view;

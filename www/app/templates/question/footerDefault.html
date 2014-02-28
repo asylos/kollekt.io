@@ -1,3 +1,4 @@
-{{#if question}}
-<a class="addAnswer blockButton" href="">{{#icon "plus" className="small inline largePadRight"}}{{/icon}}Add new answer</a>
+{{#if printableAnswers}}
+<a class="printAnswers blockButton" href="">{{#icon "print" className="small inline largePadRight"}}{{/icon}}Print {{printableAnswers}} selected answers</a>
 {{/if}}
+<a class="addAnswer blockButton" href="">{{#icon "plus" className="small inline largePadRight"}}{{/icon}}Add new answer</a>

@@ -5,6 +5,7 @@
 define([
   'helpers/namespace',
   'marionette',
+  'views/printout',
   'models/question',
   'collections/answers',
   // Overview views
@@ -23,7 +24,7 @@ define([
   'hbs!templates/question/footerShow'
 ],
 
-function (app, Marionette, Model, AnswersCollection, AnswersListView, View, AddView, ShowView, QuestionHeaderView, questionHeaderTemplate, FooterView, FooterTemplateDefault, FooterTemplateAdd, FooterTemplateShow) {
+function (app, Marionette, PrintOutView, Model, AnswersCollection, AnswersListView, View, AddView, ShowView, QuestionHeaderView, questionHeaderTemplate, FooterView, FooterTemplateDefault, FooterTemplateAdd, FooterTemplateShow) {
 
   "use strict";
 
@@ -56,11 +57,11 @@ function (app, Marionette, Model, AnswersCollection, AnswersListView, View, AddV
       });
 
       // Question model
-      var model = new Model({
+      self.model = new Model({
         id: this.options.id
       });
 
-      model.set({
+      self.model.set({
         action: this.options.action,
         currentUser: Backbone.hoodie.account.username,
         currentUserID: Backbone.hoodie.id()
@@ -68,17 +69,25 @@ function (app, Marionette, Model, AnswersCollection, AnswersListView, View, AddV
 
       // Overview view (left side)
       self.view = new View({
-        model: model
+        model: self.model
       });
 
       // Header view
       var questionHeaderView = new QuestionHeaderView({
-        model: model,
+        model: self.model,
         className: 'questionView',
         template : questionHeaderTemplate
       });
 
       var footer;
+
+      app.vent.on('question:renderAnswerListFooter', function(model) {
+        self.renderAnswerListFooter(self);
+      });
+
+      app.vent.on('question:printAnswers', function(model) {
+        self.printAnswers(self);
+      });
 
       switch(this.options.action){
       case 'showAnswer':
@@ -92,7 +101,7 @@ function (app, Marionette, Model, AnswersCollection, AnswersListView, View, AddV
         app.details.$el.addClass('active');
         app.overview.$el.addClass('hidden');
         // check if the current user can edit the current answer
-        if(model.get('currentUserID') === answerModel.get('createdBy')){
+        if(self.model.get('currentUserID') === answerModel.get('createdBy')){
           answerModel.set({isEditable: true});
         }
         // Create footer for the show answer view
@@ -123,13 +132,13 @@ function (app, Marionette, Model, AnswersCollection, AnswersListView, View, AddV
       case 'addAnswer':
         // render the add answer interface in the details region (right side)
         var addView = new AddView({
-          model: model
+          model: self.model
         });
         app.details.show(addView);
         app.details.$el.addClass('active');
         app.overview.$el.addClass('hidden');
         footer = new FooterView({
-          model: model,
+          model: self.model,
           template: FooterTemplateAdd
         });
         app.vent.once('question:addAnswer', function(model) {
@@ -140,10 +149,8 @@ function (app, Marionette, Model, AnswersCollection, AnswersListView, View, AddV
         break;
       default:
         // render the answers list in the overview region (left side)
-        footer = new FooterView({
-          model: model,
-          template: FooterTemplateDefault
-        });
+        console.log("default self: ",self);
+        this.renderAnswerListFooter(self);
         if(app.details.$el){
           app.details.$el.removeClass('active');
         }
@@ -163,6 +170,15 @@ function (app, Marionette, Model, AnswersCollection, AnswersListView, View, AddV
 
       //app.overview.show(self.view);
       app.header.show(questionHeaderView);
+    },
+
+    renderAnswerListFooter: function(self){
+      var printableAnswers = self.collection.getPrintableAnswers(self.filteredAnswers.models);
+      self.model.set({printableAnswers: printableAnswers.length});
+      var footer = new FooterView({
+        model: self.model,
+        template: FooterTemplateDefault
+      });
       app.footer.show(footer);
     },
 
@@ -201,6 +217,29 @@ function (app, Marionette, Model, AnswersCollection, AnswersListView, View, AddV
         app.vent.trigger('question:showAnswers', this);
       }
       */
+    },
+
+    printAnswers: function(self){
+      // create and render print view
+      var printableAnswers = new AnswersCollection(self.collection.getPrintableAnswers(self.filteredAnswers.models));
+      var printview = new PrintOutView({
+        collection: printableAnswers
+      });
+      printview.render();
+
+      // create an iframe and append the rendered printview to it
+      $('<iframe id="printf"/>').appendTo('body');
+      $('#printf').contents().find('body').append(printview.el);
+
+      // focus and print the iframe
+      window.frames["printf"].focus();
+      window.frames["printf"].print();
+
+      // remove the iframe
+      _.delay(function(){
+        var frame = document.getElementById("printf");
+        frame.parentNode.removeChild(frame);
+      }, 100);
     }
   });
 

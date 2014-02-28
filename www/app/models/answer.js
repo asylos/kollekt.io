@@ -22,7 +22,8 @@ function (BaseModel) {
       original: '',
       translation: '',
       sourceName: '',
-      source: ''
+      source: '',
+      print: false
     }
 
   });

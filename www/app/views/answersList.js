@@ -17,14 +17,30 @@ function (app, Marionette, tmpl, Slip, NoAnswersView) {
   var Answer = Marionette.ItemView.extend({
     tagName: 'li',
     template: tmpl,
+    initialize: function(){
+      this.listenTo(this.model, 'change', function(model){
+        this.$el.find('.printToggle').toggleClass('active');
+      });
+    },
+
     events : {
       'click' : 'showAnswer',
+      'click .printToggle' : 'printToggle',
     },
 
     showAnswer: function(event) {
       if($(event.target).prop('tagName') === 'LI'){
         app.router.navigate(Backbone.history.fragment+'/show-answer/'+this.model.attributes.id, { trigger: true });
       }
+    },
+
+    printToggle: function(event) {
+      if(this.model.get('print')){
+        this.model.set({print: false});
+      } else {
+        this.model.set({print: true});
+      }
+      app.vent.trigger('question:renderAnswerListFooter');
     }
 
   });

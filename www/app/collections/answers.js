@@ -41,6 +41,17 @@ function (BaseCollection, Model) {
       });
       console.log("result: ",result);
       return result;
+    },
+
+    getPrintableAnswers: function (answers) {
+      var self = this;
+      var payload = [];
+      var results = _.filter(answers, function(answer){
+        if (answer.attributes.type === "answer" && answer.attributes.print === true){
+          payload.push(answer.toJSON());
+        }
+      });
+      return payload;
     }
 
   });
