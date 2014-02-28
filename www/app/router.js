@@ -63,6 +63,7 @@ function (app, Marionette, BaseRouter) {
       },
 
       addAnswer: function ( id, slug ) {
+        console.log("addAnswer: ",slug);
         require(['controllers/question'], function (Controller) {
           new Controller({
             id: id,

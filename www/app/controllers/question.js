@@ -142,6 +142,7 @@ function (app, Marionette, PrintOutQuestion, PrintOutAnswer, Model, AnswersColle
           model: self.model,
           template: FooterTemplateAdd
         });
+        app.footer.show(footer);
         app.vent.once('question:addAnswer', function(model) {
           if(model.belongsToQuestion === self.options.id){
             self.addAnswer(model);
@@ -150,7 +151,6 @@ function (app, Marionette, PrintOutQuestion, PrintOutAnswer, Model, AnswersColle
         break;
       default:
         // render the answers list in the overview region (left side)
-        console.log("default self: ",self);
         this.renderAnswerListFooter(self);
         if(app.details.$el){
           app.details.$el.removeClass('active');
@@ -237,12 +237,13 @@ function (app, Marionette, PrintOutQuestion, PrintOutAnswer, Model, AnswersColle
 
       // create an iframe and append the rendered printview to it
       $('<iframe id="printf"/>').appendTo('body');
+      $("#printf").contents().find('head').append('<link rel="stylesheet" href="assets/css/app/print.css">');
       $('#printf').contents().find('body').append(printableQuestion.el);
       $('#printf').contents().find('body').append(printview.el);
 
       // focus and print the iframe
-      window.frames["printf"].focus();
-      window.frames["printf"].print();
+      window.frames.printf.focus();
+      window.frames.printf.print();
 
       // remove the iframe
       _.delay(function(){
