@@ -5,7 +5,8 @@
 define([
   'helpers/namespace',
   'marionette',
-  'views/printout',
+  'views/printoutQuestion',
+  'views/printoutAnswer',
   'models/question',
   'collections/answers',
   // Overview views
@@ -24,7 +25,7 @@ define([
   'hbs!templates/question/footerShow'
 ],
 
-function (app, Marionette, PrintOutView, Model, AnswersCollection, AnswersListView, View, AddView, ShowView, QuestionHeaderView, questionHeaderTemplate, FooterView, FooterTemplateDefault, FooterTemplateAdd, FooterTemplateShow) {
+function (app, Marionette, PrintOutQuestion, PrintOutAnswer, Model, AnswersCollection, AnswersListView, View, AddView, ShowView, QuestionHeaderView, questionHeaderTemplate, FooterView, FooterTemplateDefault, FooterTemplateAdd, FooterTemplateShow) {
 
   "use strict";
 
@@ -221,14 +222,22 @@ function (app, Marionette, PrintOutView, Model, AnswersCollection, AnswersListVi
 
     printAnswers: function(self){
       // create and render print view
+      var printableQuestion = new PrintOutQuestion({
+        model: self.model
+      });
+      printableQuestion.render();
+
       var printableAnswers = new AnswersCollection(self.collection.getPrintableAnswers(self.filteredAnswers.models));
-      var printview = new PrintOutView({
+      var printview = new PrintOutAnswer({
         collection: printableAnswers
       });
       printview.render();
 
+      // needs css!
+
       // create an iframe and append the rendered printview to it
       $('<iframe id="printf"/>').appendTo('body');
+      $('#printf').contents().find('body').append(printableQuestion.el);
       $('#printf').contents().find('body').append(printview.el);
 
       // focus and print the iframe
