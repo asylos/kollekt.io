@@ -110,6 +110,7 @@ function (app, Marionette, PrintOutQuestion, PrintOutAnswer, Model, AnswersColle
           model: answerModel,
           template: FooterTemplateShow
         });
+        app.footer.show(footer);
         app.vent.once('question:editAnswerAsNew', function(model) {
           if(model.belongsToQuestion === self.options.id){
             //self.addAnswer(model);

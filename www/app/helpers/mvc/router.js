@@ -33,12 +33,11 @@ function (app, Backbone, localStorage) {
       console.log("user wants route: ",currentRoute);
       console.log("routeAfterSignIn: ",this.routeAfterSignIn);
 
-
       //if ($.inArray(route, this.avoidRoute) < 1) {
         //localStorage.setItem('route', route.split('/')[0]);
       //
 
-      if ($.inArray(currentRoute, this.avoidRoute) === -1 && Backbone.hoodie.account.hasInvalidSession()) {
+      if ($.inArray(currentRoute, this.avoidRoute) === -1 && !Backbone.hoodie.account.hasValidSession()) {
         console.log("user has no session! redirecting to signIn");
         app.router.routeAfterSignIn = currentRoute;
         console.log("set routeAfterSignIn: ",app.router.routeAfterSignIn);

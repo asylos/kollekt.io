@@ -63,7 +63,6 @@ function (app, Marionette, BaseRouter) {
       },
 
       addAnswer: function ( id, slug ) {
-        console.log("addAnswer: ",slug);
         require(['controllers/question'], function (Controller) {
           new Controller({
             id: id,
@@ -73,7 +72,6 @@ function (app, Marionette, BaseRouter) {
       },
 
       showAnswer: function ( id, slug, answerid ) {
-        console.log("showAnswer: ",id, slug, answerid);
         require(['controllers/question'], function (Controller) {
           new Controller({
             id: id,
