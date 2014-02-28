@@ -45,14 +45,9 @@ function (app, Marionette, tmpl, Slip, NoAnswersView) {
           e.preventDefault();
         });
 
-        ol.addEventListener('slip:beforereorder', function(e){
-          if (/demo-no-reorder/.test(e.target.className)) {
-            e.preventDefault();
-          }
-        }, false);
-
+        // Instant dragging on the handle
         ol.addEventListener('slip:beforewait', function(e){
-          if (e.target.className.indexOf('instant') > -1) {
+          if (e.target.className.indexOf('instant') > -1 || $(e.target).closest('.instant').length !== 0) {
             e.preventDefault();
           }
         }, false);
