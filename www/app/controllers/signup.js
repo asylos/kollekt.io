@@ -23,6 +23,8 @@ function (app, Marionette, Model, View) {
         this.model.attributes.continueAfterSignIn = true;
       }
 
+      this.model.signOut();
+
       this.view = new View({
         model: self.model
       });

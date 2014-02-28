@@ -234,8 +234,6 @@ function (app, Marionette, PrintOutQuestion, PrintOutAnswer, Model, AnswersColle
       });
       printview.render();
 
-      // needs css!
-
       // create an iframe and append the rendered printview to it
       $('<iframe id="printf"/>').appendTo('body');
       $("#printf").contents().find('head').append('<link rel="stylesheet" href="assets/css/app/print.css">');

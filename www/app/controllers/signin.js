@@ -23,7 +23,7 @@ function (app, Marionette, Model, View, HeaderView, headerTemplate) {
         continueAfterSignIn: app.router.routeAfterSignIn
       });
 
-      console.log("model: ",self.model);
+      this.model.signOut();
 
       this.view = new View({
         model: self.model
