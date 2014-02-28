@@ -52,19 +52,26 @@ function (app, Marionette) {
         // Input is empty, tell user
         $input.attr('placeholder', errorMessage);
       } else {
+        // Immediately open the question's page
+        Backbone.hoodie.store.add('question', {question: question}).publish().done(function(data){
+          console.log("data: ",data);
+          var urlifiedQuestion = app.urlify(data.question);
+          app.router.navigate('question/'+data.id+'/'+urlifiedQuestion, {trigger: true});
+        }).fail(function(error){
+          console.log("error: ",error);
+        });
+        /*
         // Update model
         // SVEN: this isn't really an actual model for a question, I just needed something to
         // save the thing with. We never use it again afterwards.
         this.model.save({
           question: question
         });
-        // Immediately open the question's page
         this.model.save().done(function(data){
           Backbone.hoodie.store.find('question', data.id).publish();
           // URLify the question and append it to the url, for the humans
-          var urlifiedQuestion = app.urlify(data.question);
-          app.router.navigate('question/'+data.id+'/'+urlifiedQuestion, {trigger: true});
         });
+        */
       }
     }
   });
