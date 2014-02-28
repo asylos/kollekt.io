@@ -110,9 +110,9 @@ module.exports = function (grunt) {
         options: {
           almond: true,
           replaceRequireScript: [{
-            files: ['www/prod/app/index.html'],
+            files: ['www/prod/index.html'],
             module: 'main',
-            modulePath: 'www/app/main'
+            modulePath: 'app/main'
           }],
           insertRequire: ['main'],
           baseUrl: "www/app/",
@@ -137,7 +137,7 @@ module.exports = function (grunt) {
             backbone:      '../lib/backbone/backbone',
             marionette:    '../lib/backbone.marionette/lib/backbone.marionette',
             routeFilter:   '../lib/backbone.routefilter/index',
-            hoodie:        '../lib/hoodie/dist/hoodie.min',
+            hoodie:        '../lib/hoodie/index',
             validation:    '../lib/backbone-validation/dist/backbone-validation',
             urlify:        '../lib/urlify/index',
             slip:          '../lib/slip/slip',

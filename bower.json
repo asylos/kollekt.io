@@ -22,6 +22,6 @@
     "normalize-scss": "~3.0.0"
   },
   "resolutions": {
-    "hoodie": "^0.6.x"
+    "hoodie": "*"
   }
 }
