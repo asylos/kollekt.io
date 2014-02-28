@@ -79,10 +79,19 @@ module.exports = function (grunt) {
 
     copy: {
       dist: {
-        files: {
-          'www/prod/app/index.html': 'www/app/index.html',
-          'www/prod/assets/css/app/': 'www/assets/css/**'
-        }
+        files: [{
+          expand: true,
+          cwd: 'www/',
+          src: [
+            'index.html',
+            'assets/css/**/*',
+          ],
+          dest: 'www/prod/'
+        }]
+        // {
+        //   'www/prod/app/index.html': 'www/app/index.html',
+        //   'www/prod/assets/css/app/': 'www/assets/css/**'
+        // }
       }
     },
 
@@ -120,14 +129,14 @@ module.exports = function (grunt) {
           optimizeAllPluginResources: true,
           paths: {
             app:           '.',
-            text:          'www/lib/require-text/text',
-            hbs:           'www/lib/backbone.marionette.hbs/backbone.marionette.hbs',
-            jquery:        'www/lib/jquery/jquery',
-            handlebars:    'www/lib/handlebars/handlebars',
-            lodash:        'www/lib/lodash/lodash',
-            backbone:      'www/lib/backbone/backbone',
-            marionette:    'www/lib/backbone.marionette/lib/backbone.marionette',
-            hoodie:        'www/lib/hoodie/dist/hoodie.min'
+            text:          '../lib/require-text/text',
+            hbs:           '../lib/backbone.marionette.hbs/backbone.marionette.hbs',
+            jquery:        '../lib/jquery/jquery',
+            handlebars:    '../lib/handlebars/handlebars',
+            lodash:        '../lib/lodash/lodash',
+            backbone:      '../lib/backbone/backbone',
+            marionette:    '../lib/backbone.marionette/lib/backbone.marionette',
+            hoodie:        '../lib/hoodie/dist/hoodie.min'
           },
           shim: {
             'backbone': {
