@@ -148,14 +148,26 @@ module.exports = function (grunt) {
               deps: ['lodash', 'jquery'],
               exports: 'Backbone'
             },
-
             'marionette': {
               deps: ['backbone'],
               exports: 'Backbone.Marionette'
             },
-
             'handlebars': {
               exports: 'Handlebars'
+            },
+            'validation': {
+              deps: ['backbone'],
+              exports: 'Backbone.Validation'
+            },
+            'urlify':{
+              exports: 'Urlify'
+            },
+            'routeFilter': {
+              deps: ['backbone'],
+              exports: 'Backbone.Router'
+            },
+            'slip': {
+              exports: 'slip'
             }
           },
           out: "www/prod/app/main.js",
