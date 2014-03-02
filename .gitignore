@@ -1,5 +1,6 @@
 data/
 _data/
 www/lib
+www/prod
 node_modules
 .sass-cache/
