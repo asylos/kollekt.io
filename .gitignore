@@ -1,7 +1,5 @@
 data/
 _data/
-www/lib/
-!www/lib/hoodie/
 www/prod/
 node_modules
 .sass-cache/

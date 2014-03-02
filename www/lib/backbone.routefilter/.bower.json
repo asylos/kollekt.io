@@ -1,0 +1,14 @@
+{
+  "name": "backbone.routefilter",
+  "_cacheHeaders": {
+    "ETag": "\"995d50c07320892eeef01d7559c4a3db\"",
+    "Content-Length": "4487",
+    "Content-Type": "text/plain; charset=utf-8",
+    "Content-Disposition": "inline"
+  },
+  "_release": "e-tag:995d50c07",
+  "main": "index.js",
+  "_source": "https://raw.github.com/boazsender/backbone.routefilter/master/dist/backbone.routefilter.js",
+  "_target": "*",
+  "_originalSource": "https://raw.github.com/boazsender/backbone.routefilter/master/dist/backbone.routefilter.js"
+}

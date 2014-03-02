@@ -1,0 +1,33 @@
+{
+  "name": "slip",
+  "main": "slip.js",
+  "version": "1.0.0",
+  "homepage": "http://pornel.net/slip/",
+  "authors": [
+    "pornel@pornel.net"
+  ],
+  "description": "A tiny library for interactive swiping and reordering of elements in lists on touch screens",
+  "keywords": [
+    "swipe",
+    "touch",
+    "interactive"
+  ],
+  "license": "(BSD)",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "app/bower_components",
+    "test",
+    "tests"
+  ],
+  "_release": "1.0.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "1.0.0",
+    "commit": "de217f4beb72f2bb6edfaaddf3111228c27ae444"
+  },
+  "_source": "git://github.com/pornel/slip.git",
+  "_target": "~1.0.0",
+  "_originalSource": "slip"
+}

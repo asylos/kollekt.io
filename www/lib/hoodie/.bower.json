@@ -1,0 +1,11 @@
+{
+  "name": "hoodie",
+  "_cacheHeaders": {
+    "Content-Length": "132195",
+    "Content-Type": "application/javascript; charset=utf-8"
+  },
+  "main": "index.js",
+  "_source": "http://127.0.0.1:9000/_api/_files/hoodie.js",
+  "_target": "*",
+  "_originalSource": "http://127.0.0.1:9000/_api/_files/hoodie.js"
+}

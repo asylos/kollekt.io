@@ -20,8 +20,5 @@
     "backbone.routefilter": "https://raw.github.com/boazsender/backbone.routefilter/master/dist/backbone.routefilter.js",
     "slip": "~1.0.0",
     "normalize-scss": "~3.0.0"
-  },
-  "resolutions": {
-    "hoodie": "*"
   }
 }
