@@ -1,6 +1,7 @@
 data/
 _data/
-www/lib
-www/prod
+www/lib/
+!www/lib/hoodie/
+www/prod/
 node_modules
 .sass-cache/
