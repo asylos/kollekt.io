@@ -13,19 +13,15 @@ define([
   'views/answersList',
   // Detail views
   'views/question',
-  'views/question/add',
-  'views/question/show',
+  'views/question/answerDetail',
   // Headers
   'views/header',
   'hbs!templates/questionHeader',
   // Footers
-  'views/footer',
-  'hbs!templates/question/footerDefault',
-  'hbs!templates/question/footerAdd',
-  'hbs!templates/question/footerShow'
+  'views/footer'
 ],
 
-function (app, Marionette, PrintOutQuestion, PrintOutAnswer, Model, AnswersCollection, AnswersListView, View, AddView, ShowView, QuestionHeaderView, questionHeaderTemplate, FooterView, FooterTemplateDefault, FooterTemplateAdd, FooterTemplateShow) {
+function (app, Marionette, PrintOutQuestion, PrintOutAnswer, Model, AnswersCollection, AnswersListView, View, AnswerDetailView, QuestionHeaderView, questionHeaderTemplate, FooterView) {
 
   "use strict";
 
@@ -37,53 +33,16 @@ function (app, Marionette, PrintOutQuestion, PrintOutAnswer, Model, AnswersColle
 
       // Events
 
-      Backbone.hoodie.store.on('change:answer', this.onNewAnswerFromStore);
+      // Backbone.hoodie.store.on('change:answer', this.onNewAnswerFromStore);
 
-      // Fetch all the answers
-      app.vent.on('question:showAnswers', function(questionModel) {
-        console.log("questionModel: ",questionModel);
-        if(questionModel.id){
-          self.collection = new AnswersCollection({
-            id: questionModel.id
-          });
-
-          this.listenTo(self.collection, 'reset', function (model) {
-            // Filter the answers to only show those belonging to this question
-            self.filteredAnswers = new AnswersCollection(self.collection.belongsToQuestion(model));
-            var answersView = new AnswersListView({
-              collection: self.filteredAnswers
-            });
-            app.overview.show(answersView);
-          });
-
-          self.collection.fetch();
-        }
+      // Listen for model fetch
+      app.vent.once('question:showAnswers', function(model) {
+        self.prepareRender(self);
       });
 
-      // Question model
-      self.model = new Model({
-        id: this.options.id
+      app.vent.once('question:invalidURL', function() {
+        self.render(self);
       });
-
-      self.model.set({
-        action: this.options.action,
-        currentUser: Backbone.hoodie.account.username,
-        currentUserID: Backbone.hoodie.id()
-      });
-
-      // Overview view (left side)
-      self.view = new View({
-        model: self.model
-      });
-
-      // Header view
-      var questionHeaderView = new QuestionHeaderView({
-        model: self.model,
-        className: 'questionView',
-        template : questionHeaderTemplate
-      });
-
-      var footer;
 
       app.vent.on('question:renderAnswerListFooter', function(model) {
         self.renderAnswerListFooter(self);
@@ -93,69 +52,77 @@ function (app, Marionette, PrintOutQuestion, PrintOutAnswer, Model, AnswersColle
         self.printAnswers(self);
       });
 
-      switch(this.options.action){
-      case 'showAnswer':
-        // render the add answer interface in the details region (right side)
-        var answerModel = self.collection.getAnswerByID(self.collection.models, self.options.answerID);
-        var showView = new ShowView({
-          model: answerModel
-        });
-        app.details.show(showView);
+      // Question model
+      self.model = new Model({
+        id: this.options.id
+      });
 
-        app.details.$el.addClass('active');
-        app.overview.$el.addClass('hidden');
-        // check if the current user can edit the current answer
-        if(self.model.get('currentUserID') === answerModel.get('createdBy')){
-          answerModel.set({isEditable: true});
+      self.model.fetch();
+    },
+
+    prepareRender: function(self){
+      // Set some useful attributes about the current state
+      self.model.set({
+        action: this.options.action,
+        currentAnswer: self.model.answers.getAnswerByID(self.model.answers.models, self.options.answerID),
+        currentUser: Backbone.hoodie.account.username,
+        currentUserID: Backbone.hoodie.id()
+      });
+
+      // Check whether the current answer is editable by the current user
+      if(self.model.get('currentAnswer')){
+        if(self.model.get('currentUserID') === self.model.get('currentAnswer').get('createdBy')){
+          self.model.set({isEditable: true});
         }
-        // Create footer for the show answer view
-        footer = new FooterView({
-          model: answerModel,
-          template: FooterTemplateShow
-        });
-        app.footer.show(footer);
-        app.vent.once('question:editAnswerAsNew', function(model) {
-          if(model.belongsToQuestion === self.options.id){
-            //self.addAnswer(model);
-            console.log("editAnswerAsNew");
-          }
-        });
-        app.vent.once('question:editAnswer', function(model) {
-          if(model.belongsToQuestion === self.options.id){
-            //self.addAnswer(model);
-            console.log("editAnswer");
-          }
-        });
-        app.vent.once('question:deleteAnswer', function(model) {
-          if(model.belongsToQuestion === self.options.id){
-            //self.addAnswer(model);
-            console.log("deleteAnswer");
-          }
-        });
+      }
 
-        break;
-      case 'addAnswer':
-        // render the add answer interface in the details region (right side)
-        var addView = new AddView({
+      self.render(self);
+    },
+
+    render: function(self){
+      console.log("RENDER! ",self);
+
+      // Header view
+      var questionHeaderView = new QuestionHeaderView({
+        model: self.model,
+        className: 'questionView',
+        template : questionHeaderTemplate
+      });
+
+      // This is the detail view on the right side
+      var detailView = new AnswerDetailView({
+        model: self.model
+      });
+
+      // If there are no answers, show overview view
+      if(self.model.answers.length === 0){
+        self.overviewView = new View({
           model: self.model
         });
-        app.details.show(addView);
-        app.details.$el.addClass('active');
-        app.overview.$el.addClass('hidden');
-        footer = new FooterView({
-          model: self.model,
-          template: FooterTemplateAdd
-        });
-        app.footer.show(footer);
-        app.vent.once('question:addAnswer', function(model) {
-          if(model.belongsToQuestion === self.options.id){
-            self.addAnswer(model);
-          }
-        });
-        break;
-      default:
-        // render the answers list in the overview region (left side)
         this.renderAnswerListFooter(self);
+      } else {
+        // If there are answers, show the answer list view
+        self.overviewView = new AnswersListView({
+          collection: self.model.filteredAnswers
+        });
+      }
+
+      self.footer = new FooterView({
+        model: self.model
+      });
+
+      app.header.show(questionHeaderView);
+      app.overview.show(self.overviewView);
+      app.details.show(detailView);
+      app.footer.show(self.footer);
+
+      // Do some animating
+      if(this.options.action){
+        if(app.details.$el){
+          app.details.$el.addClass('active');
+        }
+        app.overview.$el.addClass('hidden');
+      } else {
         if(app.details.$el){
           app.details.$el.removeClass('active');
         }
@@ -167,61 +134,22 @@ function (app, Marionette, PrintOutQuestion, PrintOutAnswer, Model, AnswersColle
             app.overview.$el.removeClass('hidden');
           }
         }, 333);
-        break;
       }
 
       // Scroll to top
       $('body').scrollTop(0);
 
-      //app.overview.show(self.view);
-      app.header.show(questionHeaderView);
     },
 
     renderAnswerListFooter: function(self){
-      var printableAnswers = self.collection.getPrintableAnswers(self.filteredAnswers.models);
-      self.model.set({printableAnswers: printableAnswers.length});
-      var footer = new FooterView({
-        model: self.model,
-        template: FooterTemplateDefault
-      });
-      app.footer.show(footer);
-    },
-
-    addAnswer: function(answer){
-      console.log("store answer: ",answer);
-      Backbone.hoodie.store.add('answer', answer).publish().done(this.onAddAnswer).fail(this.onAddAnswerFailed);
-    },
-
-    onAddAnswer: function(answer){
-      app.router.navigate(Backbone.history.fragment.replace('/add-answer',''), { trigger: true });
-    },
-
-    onAddAnswerFail: function(error){
-      console.log("onAddAnswerFail: ",error);
-    },
-
-    onAnswers: function(answers) {
-      console.log("onAnswers: ", answers, 'question:showAnswers:'+this.attributes.id);
-
-      //app.vent.trigger('question:showAnswers:'+this.attributes.id, this);
-    },
-
-    onAnswersFail: function(data){
-      console.log("onAnswersFail: ", data);
-    },
-
-    onNewAnswerFromStore: function(eventName, answer){
-      /*
-      var questionId = this.attributes.id;
-      // Only update if the answer belongs to this question
-      if(answer.belongsToQuestion === questionId ) {
-        // Only save in the model if the answer is new
-        if(eventName === 'add'){
-          this.attributes.answers.push(answer);
-        }
-        app.vent.trigger('question:showAnswers', this);
+      if(self.model.get('question')){
+        var printableAnswers = self.model.answers.getPrintableAnswers(self.model.filteredAnswers.models);
+        self.model.set({printableAnswers: printableAnswers.length});
+        var footer = new FooterView({
+          model: self.model
+        });
+        app.footer.show(footer);
       }
-      */
     },
 
     printAnswers: function(self){
@@ -231,14 +159,14 @@ function (app, Marionette, PrintOutQuestion, PrintOutAnswer, Model, AnswersColle
       });
       printableQuestion.render();
 
-      var printableAnswers = new AnswersCollection(self.collection.getPrintableAnswers(self.filteredAnswers.models));
+      var printableAnswers = new AnswersCollection(self.model.answers.getPrintableAnswers(self.model.filteredAnswers.models));
       var printview = new PrintOutAnswer({
         collection: printableAnswers
       });
       printview.render();
 
       // create an iframe and append the rendered printview to it
-      $('<iframe id="printf"/>').appendTo('body');
+      $('<iframe id="printf"/>').appendTo('#printContainer');
       $("#printf").contents().find('head').append('<link rel="stylesheet" href="assets/css/app/print.css">');
       $('#printf').contents().find('body').append(printableQuestion.el);
       $('#printf').contents().find('body').append(printview.el);

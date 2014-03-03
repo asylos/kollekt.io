@@ -9,11 +9,14 @@ require([
   'models/config',
   'urlify',
   'backbone',
+  'models/question',
+  'collections/answers',
   'hoodie',
-  'backboneHoodie'  //is going to be globally available on the backbone object
+  'backboneHoodie',  //is going to be globally available on the backbone object
+  'associate'
 ],
 
-function (app, router, Config, Urlify, Backbone) {
+function (app, router, Config, Urlify, Backbone, Question, Answers) {
 
   'use strict';
 
@@ -24,6 +27,11 @@ function (app, router, Config, Urlify, Backbone) {
 
   app.on('initialize:before', function() {
     Backbone.connect(); // gives you Backbone.hoodie
+
+    Backbone.associate(Question, {
+      answers: { type: Answers }
+    });
+
   });
 
   var config = new Config(),

@@ -19,7 +19,8 @@ require.config({
     backboneHoodie:'/lib/backbone-hoodie/src/backbone-hoodie',
     urlify:        '/lib/urlify/index',
     routeFilter:   '/lib/backbone.routefilter/index',
-    slip:          '/lib/slip/slip'
+    slip:          '/lib/slip/slip',
+    associate:     '/lib/backbone-associate/src/backbone.associate'
   },
 
   shim: {
@@ -47,6 +48,10 @@ require.config({
     },
     'slip': {
       exports: 'slip'
+    },
+    'associate': {
+      deps: ['backbone'],
+      exports: 'Backbone.associate'
     }
   }
 });

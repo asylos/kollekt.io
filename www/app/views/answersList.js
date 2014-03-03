@@ -7,7 +7,7 @@ define([
   'marionette',
   'hbs!templates/answer',
   'slip',
-  'views/question/noanswers'
+  'views/question/noAnswers'
 ],
 
 function (app, Marionette, tmpl, Slip, NoAnswersView) {
@@ -67,12 +67,6 @@ function (app, Marionette, tmpl, Slip, NoAnswersView) {
             e.preventDefault();
           }
         }, false);
-
-        /*
-        ol.addEventListener('slip:tap', function(e){
-          console.log("e: ",e);
-        }, false);
-        */
 
         ol.addEventListener('slip:reorder', function(e){
           e.target.parentNode.insertBefore(e.target, e.detail.insertBefore);

@@ -3,10 +3,11 @@
 //
 
 define([
-  'helpers/mvc/model'
+  'helpers/mvc/model',
+  'collections/answers'
 ],
 
-function (BaseModel) {
+function (BaseModel, Answers) {
 
   'use strict';
 
@@ -14,7 +15,6 @@ function (BaseModel) {
     type: 'question',
     initialize: function(){
       _.bindAll(this, 'fetch', 'onQuestion', 'onNoQuestion');
-      this.fetch();
     },
 
     defaults: {
@@ -22,7 +22,8 @@ function (BaseModel) {
       id: '',
       createdAt: '',
       action: '',
-      currentUser: ''
+      currentUser: '',
+      filteredAnswers: {}
     },
 
     fetch: function (){
@@ -36,13 +37,24 @@ function (BaseModel) {
       this.attributes.id = question.id;
       this.attributes.question = question.question;
       this.attributes.createdAt = question.createdAt;
-      app.vent.trigger('question:showAnswers', this);
+
+      this.answers = new Answers({
+        id: question.id
+      });
+
+      this.listenTo(this.answers, 'reset', function (model) {
+        // Filter the answers to only show those belonging to this question
+        this.filteredAnswers = new Answers(this.answers.belongsToQuestion(model));
+        app.vent.trigger('question:showAnswers', this);
+      });
+
+      this.answers.fetch();
     },
 
     onNoQuestion: function (data){
       console.log("onNoQuestion: ",data);
       console.log("This question doesn't exist.");
-      app.vent.trigger('question:showAnswers', data);
+      app.vent.trigger('question:invalidURL', data);
     }
 
   });

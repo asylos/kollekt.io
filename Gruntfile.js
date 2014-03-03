@@ -142,6 +142,7 @@ module.exports = function (grunt) {
             urlify:        '../lib/urlify/index',
             slip:          '../lib/slip/slip',
             backboneHoodie:'../lib/backbone-hoodie/src/backbone-hoodie',
+            associate:     '../lib/backbone-associate/src/backbone.associate'
           },
           shim: {
             'backbone': {
@@ -168,6 +169,10 @@ module.exports = function (grunt) {
             },
             'slip': {
               exports: 'slip'
+            },
+            'associate': {
+              deps: ['backbone'],
+              exports: 'Backbone.associate'
             }
           },
           out: "www/prod/app/main.js",

@@ -359,6 +359,12 @@ header{
 
 // Question view
 
+#printContainer{
+  width: 0;
+  height: 0;
+  z-index: -100;
+}
+
 #content .questionView{
   margin: $padding;
   footer{

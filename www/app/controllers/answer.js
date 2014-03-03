@@ -17,22 +17,7 @@ function (app, Marionette, Collection, Model) {
     initialize: function (options) {
       var self = this;
       this.options = options || {};
-
-      this.collection = new Collection();
-
-      this.collection.done(this.onAnswers).fail(this.onAnswersFail);
-
-      Backbone.hoodie.store.on('change:answer', this.onNewAnswerFromStore);
-    },
-
-
-    onAnswers: function(answers) {
-      console.log("onAnswers: ", answers, 'question:showAnswers:'+this.attributes.id);
-      //app.vent.trigger('question:showAnswers:'+this.attributes.id, this);
-    },
-
-    onAnswersFail: function(data){
-      console.log("onAnswersFail: ", data);
+      //Backbone.hoodie.store.on('change:answer', this.onNewAnswerFromStore);
     },
 
     onNewAnswerFromStore: function(eventName, answer){
