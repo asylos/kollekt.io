@@ -25,6 +25,10 @@ function (app, Marionette, showAnswers, addAnswer, noAnswers) {
         this.template = addAnswer;
         this.$el.addClass('addView');
         break;
+      case 'editAnswer':
+        this.template = addAnswer;
+        this.$el.addClass('editView');
+        break;
       default:
         this.template = noAnswers;
         this.$el.addClass('noAnswersView');

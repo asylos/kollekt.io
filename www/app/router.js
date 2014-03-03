@@ -28,6 +28,7 @@ function (app, Marionette, BaseRouter) {
         'question/:id/:slug'                                        : 'question',
         'question/:id/:slug/add-answer'                             : 'addAnswer',
         'question/:id/:slug/show-answer/:answerid'                  : 'showAnswer',
+        'question/:id/:slug/edit-answer/:answerid'                  : 'editAnswer',
       },
 
       index: function () {
@@ -77,6 +78,16 @@ function (app, Marionette, BaseRouter) {
             id: id,
             answerID: answerid,
             action: 'showAnswer'
+          });
+        });
+      },
+
+      editAnswer: function ( id, slug, answerid ) {
+        require(['controllers/question'], function (Controller) {
+          new Controller({
+            id: id,
+            answerID: answerid,
+            action: 'editAnswer'
           });
         });
       }

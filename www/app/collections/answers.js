@@ -23,6 +23,16 @@ function (BaseCollection, Model) {
       });
     },
 
+    update: function(answer, id){
+      Backbone.hoodie.store.update('answer', id, answer).done(this.onStoreUpdate).fail(this.onStoreAnswerFailed);
+    },
+
+    onStoreUpdate: function(answer){
+      // Go back up one level in the URL
+      var fragment = Backbone.history.fragment;
+      app.router.navigate(fragment.substr(0, fragment.indexOf('/edit-answer')), { trigger: true });
+    },
+
     // Save a new answer to the store
     store: function(answer){
       Backbone.hoodie.store.add('answer', answer).publish().done(this.onStoreAnswer).fail(this.onStoreAnswerFailed);
