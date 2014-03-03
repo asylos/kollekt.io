@@ -14,7 +14,12 @@ function (app, Marionette, tmpl) {
 
   var PrintAnswer = Marionette.ItemView.extend({
     tagName: 'li',
-    template: tmpl
+    template: tmpl,
+    initialize: function(){
+      this.$el.attr({
+        'data-id': this.model.id
+      });
+    }
   });
 
   var View = Marionette.CollectionView.extend({

@@ -21,6 +21,9 @@ function (app, Marionette, tmpl, Slip, NoAnswersView) {
       this.listenTo(this.model, 'change', function(model){
         this.$el.find('.printToggle').toggleClass('active');
       });
+      this.$el.attr({
+        'data-id': this.model.get('id')
+      });
     },
 
     events : {

@@ -80,7 +80,6 @@ function (app, Marionette, PrintOutQuestion, PrintOutAnswer, Model, AnswersColle
     },
 
     render: function(self){
-      console.log("RENDER! ",self);
 
       // Header view
       var questionHeaderView = new QuestionHeaderView({
@@ -159,9 +158,16 @@ function (app, Marionette, PrintOutQuestion, PrintOutAnswer, Model, AnswersColle
       });
       printableQuestion.render();
 
-      var printableAnswers = new AnswersCollection(self.model.answers.getPrintableAnswers(self.model.filteredAnswers.models));
+      var printOrder = [];
+      $('#slipList li').each(function(){
+        if($(this).find('.printToggle.active').length !== 0){
+          printOrder.push($(this).data('id'));
+        }
+      });
+
+      var sortedPrintableAnswers = new AnswersCollection(self.model.answers.getSortedPrintableAnswers(self.model.filteredAnswers.models, printOrder));
       var printview = new PrintOutAnswer({
-        collection: printableAnswers
+        collection: sortedPrintableAnswers
       });
       printview.render();
 

@@ -55,7 +55,6 @@ function (BaseCollection, Model) {
           return answers;
         }
       });
-      console.log("result: ",result);
       return result;
     },
 
@@ -66,6 +65,17 @@ function (BaseCollection, Model) {
         if (answer.attributes.type === "answer" && answer.attributes.print === true){
           payload.push(answer.toJSON());
         }
+      });
+      return payload;
+    },
+
+    getSortedPrintableAnswers: function (answers, order) {
+      var self = this;
+      var payload = [];
+      _.each(order, function(id){
+        payload.push(_.find(answers, function(answer){
+          return answer.attributes.id === id;
+        }));
       });
       return payload;
     }
