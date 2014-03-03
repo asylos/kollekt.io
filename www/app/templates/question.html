@@ -1,12 +1,15 @@
-<div class="noAnswers">
-  <div class="message"></div>
-</div>
-{{#if answers}}
-  <ul id="slipList">
-  {{#each answers}}
-    <li class="answer">{{title}} ({{id}})</li>
-  {{/each}}
-  </ul>
+{{#if id}}
+  {{#if answers}}
+    <ul id="slipList">
+    {{#each answers}}
+      <li class="answer">{{title}} ({{id}})</li>
+    {{/each}}
+    </ul>
+  {{else}}
+    <div class="noAnswers">
+      <div class="message">This question hasn't been answered yet. </div>
+    </div>
+  {{/if}}
 {{else}}
-  <h2>No Answers!</h2>
+  This question doesn't exist.
 {{/if}}

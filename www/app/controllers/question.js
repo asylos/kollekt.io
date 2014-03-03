@@ -40,21 +40,24 @@ function (app, Marionette, PrintOutQuestion, PrintOutAnswer, Model, AnswersColle
       Backbone.hoodie.store.on('change:answer', this.onNewAnswerFromStore);
 
       // Fetch all the answers
-      app.vent.on('question:showAnswers', function(model) {
-        self.collection = new AnswersCollection({
-          id: self.options.id
-        });
-
-        this.listenTo(self.collection, 'reset', function (model) {
-          // Filter the answers to only show those belonging to this question
-          self.filteredAnswers = new AnswersCollection(self.collection.belongsToQuestion(model));
-          var answersView = new AnswersListView({
-            collection: self.filteredAnswers
+      app.vent.on('question:showAnswers', function(questionModel) {
+        console.log("questionModel: ",questionModel);
+        if(questionModel.id){
+          self.collection = new AnswersCollection({
+            id: questionModel.id
           });
-          app.overview.show(answersView);
-        });
 
-        self.collection.fetch();
+          this.listenTo(self.collection, 'reset', function (model) {
+            // Filter the answers to only show those belonging to this question
+            self.filteredAnswers = new AnswersCollection(self.collection.belongsToQuestion(model));
+            var answersView = new AnswersListView({
+              collection: self.filteredAnswers
+            });
+            app.overview.show(answersView);
+          });
+
+          self.collection.fetch();
+        }
       });
 
       // Question model
