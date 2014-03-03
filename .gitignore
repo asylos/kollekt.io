@@ -3,5 +3,4 @@ _data/
 production/
 www/prod/
 node_modules
-www/lib
 .sass-cache/
