@@ -19,15 +19,15 @@ function (app, Marionette, showAnswers, addAnswer, noAnswers) {
       switch(this.model.get('action')){
       case 'showAnswer':
         this.template = showAnswers;
-        this.className = 'addView';
+        this.$el.addClass('showView');
         break;
       case 'addAnswer':
         this.template = addAnswer;
-        this.className = 'showView';
+        this.$el.addClass('addView');
         break;
       default:
         this.template = noAnswers;
-        this.className = 'noAnswersView';
+        this.$el.addClass('noAnswersView');
         break;
       }
     },
