@@ -34,9 +34,7 @@ function (app, Marionette, showAnswers, addAnswer, noAnswers) {
         this.$el.addClass('noAnswersView');
         break;
       }
-      app.vent.off('resize');
-      app.vent.on('resize', this.onResize);
-      this.onResize();
+      this.listenTo(app.vent, 'resize', this.onResize, this);
     },
 
     onResize: function() {
@@ -54,6 +52,7 @@ function (app, Marionette, showAnswers, addAnswer, noAnswers) {
       this.$el.find("textarea").each(function(index, el){
         $(el).height( el.scrollHeight);
       });
+      this.onResize();
     },
 
     events : {

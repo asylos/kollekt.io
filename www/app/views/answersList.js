@@ -24,8 +24,7 @@ function (app, Marionette, tmpl, Slip, NoAnswersView) {
       this.$el.attr({
         'data-id': this.model.get('id')
       });
-      app.vent.off('resize');
-      app.vent.on('resize', this.onResize);
+      this.listenTo(app.vent, 'resize', this.onResize, this);
       this.onResize();
     },
 

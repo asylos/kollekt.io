@@ -35,6 +35,8 @@ function (app, Marionette, PrintOutQuestion, PrintOutAnswer, Model, AnswersColle
 
       // Backbone.hoodie.store.on('change:answer', this.onNewAnswerFromStore);
 
+      this.listenTo(app.vent, 'resize', this.onResize, this);
+
       app.vent.off('question:showAnswers');
       app.vent.off('question:invalidURL');
       app.vent.off('question:renderAnswerListFooter');
@@ -154,17 +156,12 @@ function (app, Marionette, PrintOutQuestion, PrintOutAnswer, Model, AnswersColle
       if(self.model.get('question')){
         var printableAnswers = self.model.answers.getPrintableAnswers(self.model.filteredAnswers.models);
         self.model.set({printableAnswers: printableAnswers.length});
-        /*
-        var footer = new FooterView({
-          model: self.model
-        });
-        app.footer.show(footer);
-        */
         app.footer.currentView.render();
       }
     },
 
     printAnswers: function(self){
+      console.log("printAnswers: ");
       var frame = document.getElementById("printf");
       if(frame) {
         frame.parentNode.removeChild(frame);

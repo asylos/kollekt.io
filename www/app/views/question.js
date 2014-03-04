@@ -16,8 +16,7 @@ function (app, Marionette, template) {
     className: 'questionView',
     template : template,
     initialize: function() {
-      app.vent.off('resize');
-      app.vent.on('resize', this.onResize);
+      this.listenTo(app.vent, 'resize', this.onResize, this);
       this.onResize();
     },
 

@@ -58,7 +58,6 @@ function (app, Marionette, defaultTemplate, addTemplate, editTemplate, showTempl
     },
 
     addAnswer: function(event){
-      console.log("addAnswer: ");
       event.preventDefault();
       app.router.navigate(Backbone.history.fragment+'/add-answer', { trigger: true });
     },
