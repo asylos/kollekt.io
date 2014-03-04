@@ -24,19 +24,6 @@ function (app, Marionette, tmpl, Slip, NoAnswersView) {
       this.$el.attr({
         'data-id': this.model.get('id')
       });
-      this.listenTo(app.vent, 'resize', this.onResize, this);
-      this.onResize();
-    },
-
-    onResize: function() {
-      var baseHeight = $(window).height();
-      if(app.header.$el){
-        baseHeight -= app.header.$el.outerHeight();
-      }
-      if(app.footer.$el){
-        baseHeight -= app.footer.$el.find('.overview').outerHeight();
-      }
-      $('#overview').height(baseHeight);
     },
 
     events : {
@@ -68,6 +55,22 @@ function (app, Marionette, tmpl, Slip, NoAnswersView) {
     id: 'slipList',
     itemView: Answer,
     emptyView: NoAnswersView,
+    initialize: function(){
+      this.listenTo(app.vent, 'resize', this.onResize, this);
+      this.onResize();
+    },
+
+    onResize: function() {
+      var baseHeight = $(window).height();
+      if(app.header.$el){
+        baseHeight -= app.header.$el.outerHeight();
+      }
+      if(app.footer.$el){
+        baseHeight -= app.footer.$el.find('.overview').outerHeight();
+      }
+      $('#overview').height(baseHeight);
+    },
+
     onDomRefresh: function() {
       var self = this;
 

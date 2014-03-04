@@ -56,23 +56,32 @@ function (app, Marionette, BaseRouter) {
       },
 
       question: function ( id, slug ) {
+        app.vent.trigger('question:init', id);
+        console.log("question:init");
+        /*
         require(['controllers/question'], function (Controller) {
           new Controller({
             id: id
           });
         });
+        */
       },
 
       addAnswer: function ( id, slug ) {
+        app.vent.trigger('question:addanswer', id);
+        /*
         require(['controllers/question'], function (Controller) {
           new Controller({
             id: id,
             action: 'addAnswer'
           });
         });
+        */
       },
 
       showAnswer: function ( id, slug, answerid ) {
+        app.vent.trigger('question:showanswer', id, answerid);
+        /*
         require(['controllers/question'], function (Controller) {
           new Controller({
             id: id,
@@ -80,9 +89,12 @@ function (app, Marionette, BaseRouter) {
             action: 'showAnswer'
           });
         });
+        */
       },
 
       editAnswer: function ( id, slug, answerid ) {
+        app.vent.trigger('question:editanswer', id, answerid);
+        /*
         require(['controllers/question'], function (Controller) {
           new Controller({
             id: id,
@@ -90,6 +102,7 @@ function (app, Marionette, BaseRouter) {
             action: 'editAnswer'
           });
         });
+        */
       }
 
     });

@@ -26,11 +26,6 @@ function (app, router, Config, Urlify, Backbone, Question, Answers) {
   ]);
 
   app.on('initialize:before', function() {
-    Backbone.connect(); // gives you Backbone.hoodie
-
-    Backbone.associate(Question, {
-      answers: { type: Answers }
-    });
 
   });
 
@@ -48,7 +43,17 @@ function (app, router, Config, Urlify, Backbone, Question, Answers) {
     trim: true
   });
 
-  app.start(options);
+  // Load the question controller, then start app
+  require(['controllers/question'], function (Controller) {
+    Backbone.connect(); // gives you Backbone.hoodie
+
+    Backbone.associate(Question, {
+      answers: { type: Answers }
+    });
+    app.question = new Controller({});
+    app.start(options);
+  });
+
 
 });
 

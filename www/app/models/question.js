@@ -49,6 +49,18 @@ function (BaseModel, Answers) {
         app.vent.trigger('question:showAnswers', this);
       });
 
+      this.listenTo(this.answers, 'add', function (model) {
+        // Filter the answers to only show those belonging to this question
+        this.filteredAnswers = new Answers(this.answers.belongsToQuestion(this.answers.model));
+        app.vent.trigger('question:showAnswers', this);
+      });
+
+      this.listenTo(this.answers, 'change', function (model) {
+        // Filter the answers to only show those belonging to this question
+        this.filteredAnswers = new Answers(this.answers.belongsToQuestion(this.answers.model));
+        app.vent.trigger('question:showAnswers', this);
+      });
+
       this.answers.fetch();
     },
 

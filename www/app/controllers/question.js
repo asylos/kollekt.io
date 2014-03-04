@@ -30,6 +30,7 @@ function (app, Marionette, PrintOutQuestion, PrintOutAnswer, Model, AnswersColle
     initialize: function (options) {
       this.options = options || {};
       var self = this;
+      console.log("initialize: ",self);
 
       // Events
 
@@ -43,11 +44,11 @@ function (app, Marionette, PrintOutQuestion, PrintOutAnswer, Model, AnswersColle
       app.vent.off('question:printAnswers');
 
       // Listen for model fetch
-      app.vent.once('question:showAnswers', function(model) {
+      app.vent.on('question:showAnswers', function(model) {
         self.prepareRender(self);
       });
 
-      app.vent.once('question:invalidURL', function() {
+      app.vent.on('question:invalidURL', function() {
         self.render(self);
       });
 
@@ -59,15 +60,70 @@ function (app, Marionette, PrintOutQuestion, PrintOutAnswer, Model, AnswersColle
         self.printAnswers(self);
       });
 
+      app.vent.on('question:init', function(id) {
+        self.options.id = id;
+        self.options.action = null;
+        self.options.answerID = null;
+        self.getData(self);
+      });
+
+      app.vent.on('question:addanswer', function(id){
+        self.options.id = id;
+        self.options.action = 'addAnswer';
+        self.options.answerID = null;
+        self.prepareRender(self);
+      });
+
+      app.vent.on('question:showanswer', function(id, answerID){
+        self.options.id = id;
+        self.options.action = 'showAnswer';
+        self.options.answerID = answerID;
+        self.prepareRender(self);
+      });
+
+      app.vent.on('question:editanswer', function(id, answerID){
+        self.options.id = id;
+        self.options.action = 'editAnswer';
+        self.options.answerID = answerID;
+        self.prepareRender(self);
+      });
+
+      Backbone.hoodie.store.on('add:answer', function(answer){
+        self.model.answers.add(answer, {at: 0});
+      });
+
+      Backbone.hoodie.store.on('change:answer', function(eventName, answer){
+        if(eventName === "update"){
+          self.model.answers.set(answer, {remove: false});
+        }
+      });
+    },
+
+    getData: function(self){
+      // If we're not switching question ids, just render without fetching
+      if(self.model && self.options.id === self.model.get('id')){
+        self.prepareRender(self);
+        return;
+      }
       // Question model
       self.model = new Model({
-        id: this.options.id
+        id: self.options.id
       });
+
+      /*
+      this.listenTo(self.model, 'add change', function(event){
+        self.render(self);
+      });
+      */
 
       self.model.fetch();
     },
 
     prepareRender: function(self){
+      if(!self.model){
+        self.getData(self);
+        return;
+      }
       // Set some useful attributes about the current state
       self.model.set({
         action: this.options.action,
@@ -161,7 +217,6 @@ function (app, Marionette, PrintOutQuestion, PrintOutAnswer, Model, AnswersColle
     },
 
     printAnswers: function(self){
-      console.log("printAnswers: ");
       var frame = document.getElementById("printf");
       if(frame) {
         frame.parentNode.removeChild(frame);
