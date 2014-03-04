@@ -1,15 +1,15 @@
 {{#if currentAnswer}}
   {{#with currentAnswer.attributes}}
-  <label for="answerName">Title</label>
-  <div id="answerName">{{title}}</div>
-  <label for="answerOriginal">Original</label>
-  <div id="answerOriginal">{{original}}</div>
-  <label for="answerTranslation">Translation</label>
-  <div id="answerTranslation">{{translation}}</div>
-  <label for="answerSourceName">Source name</label>
-  <div id="answerSourceName">{{sourceName}}</div>
-  <label for="answerSource">Source</label>
-  <div id="answerSource">{{source}}</div>
+  <h2>{{title}}</h2>
+  <span class="meta">By {{authorName}}, {{createdAt}}</span>
+  <span class="label">Original</span>
+  <div>{{original}}</div>
+  <span class="label">Translation</span>
+  <div>{{translation}}</div>
+  <span class="label">Source name</span>
+  <div>{{sourceName}}</div>
+  <span class="label">Source</span>
+  <div>{{source}}</div>
   {{/with}}
 {{else}}
   This answer doesn't exist

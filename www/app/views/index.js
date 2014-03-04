@@ -45,7 +45,10 @@ function (app, Marionette) {
         event.preventDefault();
       }
       var $input = $('#question');
-      var question = $input.val();
+      var question = {
+        question: $input.val(),
+        authorName: Backbone.hoodie.account.username
+      };
       // Check if the input isn't empty
       var errorMessage = this.model.preValidate('question', question);
       if(errorMessage){
@@ -53,8 +56,7 @@ function (app, Marionette) {
         $input.attr('placeholder', errorMessage);
       } else {
         // Immediately open the question's page
-        Backbone.hoodie.store.add('question', {question: question}).publish().done(function(data){
-          console.log("data: ",data);
+        Backbone.hoodie.store.add('question', question).publish().done(function(data){
           var urlifiedQuestion = app.urlify(data.question);
           app.router.navigate('question/'+data.id+'/'+urlifiedQuestion, {trigger: true});
         }).fail(function(error){

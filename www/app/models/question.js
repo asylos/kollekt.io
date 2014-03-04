@@ -23,6 +23,7 @@ function (BaseModel, Answers) {
       createdAt: '',
       action: '',
       currentUser: '',
+      authorName: '',
       filteredAnswers: {}
     },
 
@@ -37,7 +38,7 @@ function (BaseModel, Answers) {
       this.attributes.id = question.id;
       this.attributes.question = question.question;
       this.attributes.createdAt = question.createdAt;
-
+      this.attributes.authorName = question.authorName;
       this.answers = new Answers({
         id: question.id
       });

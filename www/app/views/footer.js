@@ -65,7 +65,8 @@ function (app, Marionette, defaultTemplate, addTemplate, editTemplate, showTempl
         original: $('#answerOriginal').val(),
         translation: $('#answerTranslation').val(),
         sourceName: $('#answerSourceName').val(),
-        source: $('#answerSource').val()
+        source: $('#answerSource').val(),
+        authorName: Backbone.hoodie.account.username
       };
       this.blockSubmission = true;
       this.model.answers.store(answer);

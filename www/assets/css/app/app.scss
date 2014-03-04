@@ -379,8 +379,24 @@ header{
 }
 
 #content .showView{
+  padding: 0.5em 1em;
+  h2{
+    margin: 0;
+  }
+  .meta{
+    @include font-size(12);
+    color: $mediumText;
+    display: block;
+    margin: -.25em 0 1em 0;
+  }
+  .label{
+    @include font-size(10);
+    color: $mediumText;
+    text-transform: uppercase;
+    display: block;
+  }
   & > div{
-    margin: 0 $padding;
+    margin: 0.25em 0 1em .5em;
   }
 }
 

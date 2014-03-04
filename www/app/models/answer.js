@@ -19,6 +19,7 @@ function (BaseModel) {
       id: '',
       createdAt: '',
       createdBy: '',
+      authorName: '',
       original: '',
       translation: '',
       sourceName: '',
