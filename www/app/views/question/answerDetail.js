@@ -34,6 +34,20 @@ function (app, Marionette, showAnswers, addAnswer, noAnswers) {
         this.$el.addClass('noAnswersView');
         break;
       }
+      app.vent.off('resize');
+      app.vent.on('resize', this.onResize);
+      this.onResize();
+    },
+
+    onResize: function() {
+      var baseHeight = $(window).height();
+      if(app.header.$el){
+        baseHeight -= app.header.$el.outerHeight();
+      }
+      if(app.footer.$el){
+        baseHeight -= app.footer.$el.find('.detail').outerHeight();
+      }
+      $('#details').height(baseHeight);
     },
 
     onShow: function(){

@@ -30,7 +30,8 @@ function (BaseCollection, Model) {
     onStoreUpdate: function(answer){
       // Go back up one level in the URL
       var fragment = Backbone.history.fragment;
-      app.router.navigate(fragment.substr(0, fragment.indexOf('/edit-answer')), { trigger: true });
+      //app.router.navigate(fragment.substr(0, fragment.indexOf('/edit-answer')), { trigger: true });
+      app.router.navigate(Backbone.history.fragment.replace('/edit-answer','/show-answer'), { trigger: true });
     },
 
     // Save a new answer to the store

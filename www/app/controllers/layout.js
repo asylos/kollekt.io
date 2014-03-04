@@ -46,6 +46,17 @@ function (app, Marionette, appLayoutTmpl) {
           $('body').removeClass('no-touch');
         }
 
+        $(window).on("resize", this.onResize);
+
+      },
+
+      onResize: function() {
+        app.vent.trigger('resize');
+      },
+
+      remove: function() {
+        $(window).off("resize", this.onResize);
+        Backbone.View.prototype.remove.apply(this, arguments);
       }
     });
 

@@ -16,27 +16,20 @@ function (app, Marionette, template) {
     className: 'questionView',
     template : template,
     initialize: function() {
-      $(window).on("resize", this.onResize);
+      app.vent.off('resize');
       app.vent.on('resize', this.onResize);
       this.onResize();
     },
 
     onResize: function() {
-      if($(window).width() > 800){
-        var baseHeight = $(window).height();
-        if(app.header.$el){
-          baseHeight -= app.header.$el.outerHeight();
-        }
-        if(app.footer.$el){
-          baseHeight -= app.footer.$el.outerHeight();
-        }
-        $('#content').height(baseHeight);
+      var baseHeight = $(window).height();
+      if(app.header.$el){
+        baseHeight -= app.header.$el.outerHeight();
       }
-    },
-
-    remove: function() {
-      $(window).off("resize", this.onResize);
-      Backbone.View.prototype.remove.apply(this, arguments);
+      if(app.footer.$el){
+        baseHeight -= app.footer.$el.find('.overview').outerHeight();
+      }
+      $('#overview').height(baseHeight);
     }
   });
 
