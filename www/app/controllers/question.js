@@ -35,6 +35,11 @@ function (app, Marionette, PrintOutQuestion, PrintOutAnswer, Model, AnswersColle
 
       // Backbone.hoodie.store.on('change:answer', this.onNewAnswerFromStore);
 
+      app.vent.off('question:showAnswers');
+      app.vent.off('question:invalidURL');
+      app.vent.off('question:renderAnswerListFooter');
+      app.vent.off('question:printAnswers');
+
       // Listen for model fetch
       app.vent.once('question:showAnswers', function(model) {
         self.prepareRender(self);
@@ -112,6 +117,12 @@ function (app, Marionette, PrintOutQuestion, PrintOutAnswer, Model, AnswersColle
       app.header.show(questionHeaderView);
       app.overview.show(self.overviewView);
       app.details.show(detailView);
+
+      if(app.footer.currentView){
+        app.footer.currentView.undelegateEvents();
+        app.footer.currentView.close();
+      }
+      app.footer.close();
       app.footer.show(self.footer);
 
       // Do some animating
@@ -143,14 +154,23 @@ function (app, Marionette, PrintOutQuestion, PrintOutAnswer, Model, AnswersColle
       if(self.model.get('question')){
         var printableAnswers = self.model.answers.getPrintableAnswers(self.model.filteredAnswers.models);
         self.model.set({printableAnswers: printableAnswers.length});
+        /*
         var footer = new FooterView({
           model: self.model
         });
         app.footer.show(footer);
+        */
+        app.footer.currentView.render();
       }
     },
 
     printAnswers: function(self){
+      var frame = document.getElementById("printf");
+      if(frame) {
+        frame.parentNode.removeChild(frame);
+      }
+      $('#printContainer').empty();
+
       // create and render print view
       var printableQuestion = new PrintOutQuestion({
         model: self.model
@@ -183,7 +203,10 @@ function (app, Marionette, PrintOutQuestion, PrintOutAnswer, Model, AnswersColle
       // remove the iframe
       _.delay(function(){
         var frame = document.getElementById("printf");
-        frame.parentNode.removeChild(frame);
+        if(frame) {
+          frame.parentNode.removeChild(frame);
+        }
+        $('#printContainer').empty();
       }, 100);
     }
   });

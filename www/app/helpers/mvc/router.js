@@ -30,35 +30,26 @@ function (app, Backbone, localStorage) {
     // If not, we save their target route and redirect to login
     before: function (route) {
       var currentRoute = Backbone.history.fragment;
-      console.log("user wants route: ",currentRoute);
-      console.log("routeAfterSignIn: ",this.routeAfterSignIn);
 
       //if ($.inArray(route, this.avoidRoute) < 1) {
         //localStorage.setItem('route', route.split('/')[0]);
       //
 
       if ($.inArray(currentRoute, this.avoidRoute) === -1 && !Backbone.hoodie.account.hasAccount()) {
-        console.log("user has no session! redirecting to signIn");
         app.router.routeAfterSignIn = currentRoute;
-        console.log("set routeAfterSignIn: ",app.router.routeAfterSignIn);
         app.router.navigate('signin', {
           trigger: true
         });
         return false;
       }
       if(currentRoute === app.router.routeAfterSignIn){
-        console.log("cleared routeAfterSignIn: ",app.router.routeAfterSignIn);
         app.router.routeAfterSignIn = '';
       }
 
-      console.log('before:route', route);
 
     },
 
     after: function (route) {
-
-      console.log('after:route', route);
-
       if ($.inArray(route, this.avoidRoute) < 1) {
         this.storeRoute();
 

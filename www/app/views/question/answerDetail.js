@@ -38,7 +38,7 @@ function (app, Marionette, showAnswers, addAnswer, noAnswers) {
 
     onShow: function(){
       this.$el.find("textarea").each(function(index, el){
-        $(el).height( el.scrollHeight );
+        $(el).height( el.scrollHeight);
       });
     },
 
