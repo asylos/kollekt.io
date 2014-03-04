@@ -30,6 +30,7 @@ function (app, Marionette, Model, View) {
       });
 
       app.overview.show(self.view);
+      app.details.reset();
     }
 
   });

@@ -36,6 +36,7 @@ function (app, Marionette, Model, View, HeaderView, headerTemplate) {
 
       app.overview.show(self.view);
       app.header.show(self.headerView);
+      app.details.reset();
 
     }
 
