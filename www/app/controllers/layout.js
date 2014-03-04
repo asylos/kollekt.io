@@ -36,6 +36,7 @@ function (app, Marionette, appLayoutTmpl) {
 
         app.addRegions({
           header: "header",
+          centered: "#centered",
           content: '#content',
           overview: '#overview',
           details: '#details',

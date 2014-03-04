@@ -172,6 +172,7 @@ function (app, Marionette, PrintOutQuestion, PrintOutAnswer, Model, AnswersColle
         model: self.model
       });
 
+      app.centered.reset();
       app.header.show(questionHeaderView);
       app.overview.show(self.overviewView);
       app.details.show(detailView);

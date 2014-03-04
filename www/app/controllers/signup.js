@@ -29,8 +29,10 @@ function (app, Marionette, Model, View) {
         model: self.model
       });
 
-      app.overview.show(self.view);
+      app.centered.show(self.view);
+      app.overview.reset();
       app.details.reset();
+      app.footer.reset();
     }
 
   });

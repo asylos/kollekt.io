@@ -476,6 +476,9 @@ header{
 
 #overview{
   overflow: scroll;
+  &:empty{
+    border: none;
+  }
 }
 
 #details{
@@ -497,6 +500,11 @@ header{
   }
 }
 
+#centered {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
 @media only screen and (min-width: 800px) {
   #content {
     position: absolute;
@@ -511,6 +519,9 @@ header{
       border-right: 1px solid $darkBackground;
       &.hidden{
         display: block;
+      }
+      &:empty{
+        border: none;
       }
     }
     #details {
