@@ -80,8 +80,6 @@ function (app, Marionette, PrintOutQuestion, PrintOutAnswer, Model, AnswersColle
     },
 
     render: function(self){
-      console.log("render: ",self);
-
       // Header view
       var questionHeaderView = new QuestionHeaderView({
         model: self.model,
@@ -96,13 +94,11 @@ function (app, Marionette, PrintOutQuestion, PrintOutAnswer, Model, AnswersColle
 
       // If there are no answers, show overview view
       if(self.model.answers.length === 0){
-        console.log("no answers");
         self.overviewView = new View({
           model: self.model
         });
         this.renderAnswerListFooter(self);
       } else {
-        console.log("haz answers");
         // If there are answers, show the answer list view
         self.overviewView = new AnswersListView({
           collection: self.model.filteredAnswers

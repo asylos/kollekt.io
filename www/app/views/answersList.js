@@ -54,7 +54,9 @@ function (app, Marionette, tmpl, Slip, NoAnswersView) {
 
     showAnswer: function(event) {
       if($(event.target).prop('tagName') === 'LI'){
-        app.router.navigate(Backbone.history.fragment+'/show-answer/'+this.model.attributes.id, { trigger: true });
+        var fragments = Backbone.history.fragment.split('/');
+        var questionFragment = fragments[0]+'/'+fragments[1]+'/'+fragments[2]+'/show-answer/'+this.model.attributes.id;
+        app.router.navigate(questionFragment, { trigger: true });
       }
     },
 

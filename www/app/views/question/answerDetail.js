@@ -36,6 +36,12 @@ function (app, Marionette, showAnswers, addAnswer, noAnswers) {
       }
     },
 
+    onShow: function(){
+      this.$el.find("textarea").each(function(index, el){
+        $(el).height( el.scrollHeight );
+      });
+    },
+
     events : {
       'click .addAnswer' : 'addAnswer'
     },
