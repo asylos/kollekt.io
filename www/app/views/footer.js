@@ -24,15 +24,19 @@ function (app, Marionette, defaultTemplate, addTemplate, editTemplate, showTempl
       switch(this.model.get('action')){
       case 'showAnswer':
         this.template = showTemplate;
+        this.$el.addClass('detail');
         break;
       case 'addAnswer':
         this.template = addTemplate;
+        this.$el.addClass('detail');
         break;
       case 'editAnswer':
         this.template = editTemplate;
+        this.$el.addClass('detail');
         break;
       default:
         this.template = defaultTemplate;
+        this.$el.addClass('overview');
         break;
       }
     },
@@ -47,6 +51,10 @@ function (app, Marionette, defaultTemplate, addTemplate, editTemplate, showTempl
       'click .editAnswerAsNew'          : 'editAnswerAsNew',
       'click .editOrDeleteAnswer'       : 'editAnswer',
       'click .deleteAnswer'             : 'deleteAnswer'
+    },
+
+    onShow: function(){
+      app.vent.trigger('resize');
     },
 
     addAnswer: function(event){

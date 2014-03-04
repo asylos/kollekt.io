@@ -47,9 +47,9 @@ html {
 }
 
 body{
-  max-width: 800px;
-  margin: 0 auto;
-  position: relative;
+  //max-width: 800px;
+  //margin: 0 auto;
+  //position: relative;
 }
 
 .disabled{
@@ -485,9 +485,41 @@ header{
 }
 
 
-
-/*
-@media only screen and (min-width: 481px) {
-  @import "481up";
+@media only screen and (min-width: 800px) {
+  #content {
+    position: absolute;
+    width: 100%;
+    overflow-x: hidden;
+    padding-bottom: 0;
+    #overview {
+      width: 50%;
+      float: left;
+      height: 100%;
+      overflow: scroll;
+      &.hidden{
+        display: block;
+      }
+    }
+    #details {
+      left: 50%;
+      width: 50%;
+      height: 100%;
+      overflow: scroll;
+      position: absolute;
+      &.hidden{
+        display: block;
+      }
+    }
+  }
+  #footer{
+    .detail{
+      width: 50%;
+      margin-left: 50%;
+    }
+    .overview{
+      width: 50%;
+      margin-left: 0;
+    }
+  }
 }
-*/
+
