@@ -210,7 +210,7 @@ function (app, Marionette, PrintOutQuestion, PrintOutAnswer, Model, AnswersColle
     },
 
     renderAnswerListFooter: function(self){
-      if(self.model.get('question')){
+      if(self.model.get('question') && app.footer.currentView){
         var printableAnswers = self.model.answers.getPrintableAnswers(self.model.filteredAnswers.models);
         self.model.set({printableAnswers: printableAnswers.length});
         app.footer.currentView.render();

@@ -26,6 +26,10 @@ function (app, Marionette) {
       'keydown input[type=text]' : 'submitOnEnter'
     },
 
+    onShow: function(){
+      $('input[type=text]').focus();
+    },
+
     submitOnEnter: function (e) {
       var key = e.keyCode || e.which;
 
