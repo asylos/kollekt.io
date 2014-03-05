@@ -351,10 +351,6 @@ header{
   left: 0;
   right: 0;
   z-index: 1111;
-  & > div{
-    max-width: 800px;
-    margin: 0 auto;
-  }
 }
 
 .paddedContainer {
