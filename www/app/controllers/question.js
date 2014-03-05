@@ -136,6 +136,8 @@ function (app, Marionette, PrintOutQuestion, PrintOutAnswer, Model, AnswersColle
       if(self.model.get('currentAnswer')){
         if(self.model.get('currentUserID') === self.model.get('currentAnswer').get('createdBy')){
           self.model.set({isEditable: true});
+        } else {
+          self.model.set({isEditable: false});
         }
       }
 

@@ -57,7 +57,6 @@ function (app, Marionette, BaseRouter) {
 
       question: function ( id, slug ) {
         app.vent.trigger('question:init', id);
-        console.log("question:init");
         /*
         require(['controllers/question'], function (Controller) {
           new Controller({
